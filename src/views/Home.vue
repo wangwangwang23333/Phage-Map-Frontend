@@ -4,12 +4,12 @@
       <el-container>
         <el-aside style="width: 30vw;margin-left: 10vw;text-align: left;">
           <div style="margin-top: 10vh;width: 80%;">
-            <b>Phage Microbiome Assist Phagotherapy</b>
+            <p style="font-size: large;">Phage Microbiome Assist Phagotherapy</p>
             <div style="margin-top: 10px;">
               <b style="color: #409EFF;
             font-size: xx-large;"> Phage-MAP</b>
             </div>
-            <p style="font-size: medium;">With the help of Phage-MAP, doctors can quickly find the phage for patients infected with superbugs.</p>
+            <p style="font-size: medium;color: grey;">With the help of Phage-MAP, doctors can quickly find the phage for patients infected with superbugs.</p>
           </div>
           <!--空白部分-->
           <div style="margin-top: 10%;">
@@ -24,7 +24,7 @@
       </el-container>
     </div>
 
-    <div>
+    <div style="margin-top: 10%;">
       <b style="color: orange;font-size: x-large;">Get Started</b>
       <div style="width: 80%;margin-left: 10%;">
         <el-divider></el-divider>
@@ -224,19 +224,19 @@
     </div>
 
 
-        <!--联系-->
-        <div style="background-color: #409EFF;width: 80%;margin-left: 10%;border-radius: 30px;">
-          <div style="margin-top: 5vh;">
-            <br><br>
-            <b style="font-size: xx-large;">CONTACTS</b>
-            <p style="color: white;">If you have any feedback, please contact us</p>
-            <b>EMAIL</b>
-            <p style="color: white;">tj_software2021@163.com</p>
-            <b>ADDRESS</b>
-            <p style="color: white;">Tongji University, No.1239 siping Road, Yangpu District, Shanghai</p>
-            <br>
-          </div>
-        </div>
+    <!--联系-->
+    <div style="background-color: #40a0ff86;width: 80%;margin-left: 10%;border-radius: 30px;">
+      <div style="margin-top: 5vh;">
+        <br><br>
+        <b style="font-size: xx-large;">CONTACTS</b>
+        <p style="color: white;">If you have any feedback, please contact us</p>
+        <b>EMAIL</b>
+        <p style="color: white;">tj_software2021@163.com</p>
+        <b>ADDRESS</b>
+        <p style="color: white;">Tongji University, No.1239 siping Road, Yangpu District, Shanghai</p>
+        <br>
+      </div>
+    </div>
     <!--播放视频界面-->
     <div>
       <el-dialog
