@@ -4,7 +4,7 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
-    <router-view style="width: 80vw;margin-left: 10vw;box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;"/>
+    <router-view style="width: 80vw;margin-left: 10vw;"/>
   </div>
 </template>
 

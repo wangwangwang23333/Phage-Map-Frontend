@@ -116,32 +116,9 @@
       </el-container>
     </div>
 
-    <!--联系-->
-    <div style="background-color: #409EFF;width: 80%;margin-left: 10%;border-radius: 30px;">
-      <div style="margin-top: 5vh;">
-        <br><br>
-        <b style="font-size: xx-large;">CONTACTS</b>
-        <p style="color: white;">If you have any feedback, please contact us</p>
-        <b>EMAIL</b>
-        <p style="color: white;">tj_software2021@163.com</p>
-        <b>ADDRESS</b>
-        <p style="color: white;">Tongji University, No.1239 siping Road, Yangpu District, Shanghai</p>
-        <br>
-      </div>
-    </div>
 
-    <!--留言区-->
-    <div>
-      <el-container>
-        <el-main>
 
-        </el-main>
-        <el-aisde>
-          <el-image :src="require('@/assets/biglogo.png')"></el-image>
-        </el-aisde>
-      </el-container>
-    </div>
-
+    
     <!--展现已经存在的留言-->
     <div>
       <el-card shadow="hover" style="width:95%;margin:0 auto;border-radius:15px" >
@@ -199,6 +176,67 @@
       </el-card >
     </div>
 
+    <!--留言区-->
+    <div style="margin-top: 10vh;margin-bottom: 5vh;box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+      <el-container>
+        <el-main>
+          <el-row style="width: 80%;margin-left: 10%;">
+            <el-col :span="11">
+              <div class="sub-title" style="margin-left: -65%;">First Name</div>
+              <el-input
+              placeholder="Your First Name"
+              prefix-icon="el-icon-user-solid"
+              v-model="firstname">
+              </el-input>
+            </el-col>
+            <el-col :span="2">
+              &nbsp;
+            </el-col>
+            <el-col :span="11">
+              <div class="sub-title" style="margin-left: -65%;">Last Name</div>
+              <el-input
+              placeholder="Your Last Name"
+              prefix-icon="el-icon-user-solid"
+              v-model="lastname">
+              </el-input>
+            </el-col>
+          </el-row>
+          <el-row style="width: 80%;margin-left: 10%;margin-top: 5%;">
+            <el-col :span="24">
+              <div class="sub-title" style="margin-left: -85%;">Message</div>
+              <el-input
+              type="textarea"
+              rows=5
+              placeholder="Input the content here"
+              prefix-icon="el-icon-user-solid"
+              maxlength="256"
+              show-word-limit
+              v-model="content">
+              </el-input>
+            </el-col>
+          </el-row>
+          <el-button style="margin-top: 5%;" type="primary" plain @click="addComment()">Submit</el-button>
+        </el-main>
+        <el-aside style="width: 40%;">
+          <el-image :src="require('@/assets/biglogo.png')"></el-image>
+        </el-aside>
+      </el-container>
+    </div>
+
+
+        <!--联系-->
+        <div style="background-color: #409EFF;width: 80%;margin-left: 10%;border-radius: 30px;">
+          <div style="margin-top: 5vh;">
+            <br><br>
+            <b style="font-size: xx-large;">CONTACTS</b>
+            <p style="color: white;">If you have any feedback, please contact us</p>
+            <b>EMAIL</b>
+            <p style="color: white;">tj_software2021@163.com</p>
+            <b>ADDRESS</b>
+            <p style="color: white;">Tongji University, No.1239 siping Road, Yangpu District, Shanghai</p>
+            <br>
+          </div>
+        </div>
     <!--播放视频界面-->
     <div>
       <el-dialog
@@ -235,7 +273,7 @@
 // @ is an alias to /src
 import {videoPlayer} from "vue-video-player";
 import "video.js/dist/video-js.css";
-
+import { getComment } from '@/api/board';
 
 export default {
   name: 'Home',
@@ -243,7 +281,11 @@ export default {
     videoPlayer,
   },
   created(){
-    
+    getComment().then(response=>{
+        this.couponList=response.data.couponList; 
+    }).catch(()=>{
+        this.$message.error("当前网络异常");
+    })
   },
   methods:{
     seeVideo(){
@@ -254,12 +296,52 @@ export default {
     },
     //发送留言
     addComment(){
+      //判断是否输入了FirstName
+      if(this.firstname.length==0){
+        this.$message({
+          message: 'Please input your first name!',
+          type: 'warning'
+        });
+        return;
+      }
+      if(this.firstname.length>10){
+        this.$message({
+          message: 'Your first name should not be longer than 10 words!',
+          type: 'warning'
+        });
+        return;
+      }
+      if(this.lastname.length==0){
+        this.$message({
+          message: 'Please input your last name!',
+          type: 'warning'
+        });
+        return;
+      }
+      if(this.lastname.length>10){
+        this.$message({
+          message: 'Your last name should not be longer than 10 words!',
+          type: 'warning'
+        });
+        return;
+      }
+      if(this.content==0){
+        this.$message({
+          message: 'The content should not be empty!',
+          type: 'warning'
+        });
+        return;
+      }
+      //发送api请求
 
     }
   },
   data(){
     return{
       dialogVisible:false,
+      firstname:'',
+      lastname:'',
+      content:'',
       playerOptions: {
         playbackRates: [0.5,1.0,  2.0], //播放速度
         autoplay: true, //如果true,浏览器准备好时开始回放。
