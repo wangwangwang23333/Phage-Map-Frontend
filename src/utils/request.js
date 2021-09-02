@@ -11,8 +11,8 @@ axios.defaults.withCredentials = true
 // create an axios instance
 const service = axios.create({
   //baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
-  baseURL:'https://api.guisu.fun:6001/api/',
-  timeout: 50000, // request timeout
+  baseURL:'http://47.100.225.207:8081/api/',
+  timeout: 5000, // request timeout
   async:true,
   crossDomain:true,
 })
