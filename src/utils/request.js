@@ -17,17 +17,10 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
     config => {
-      // do something before request is sent
-      if (localStorage.getItem('Authorization')) {
-        config.headers.Token = localStorage.getItem('Authorization');
-        console.log('本次request请求传递了token信息')
-      }
 
       return config;
     },
     error => {
-      // do something with request error
-      console.log(error) // for debug
       return Promise.reject(error)
     }
 )

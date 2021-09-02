@@ -250,7 +250,7 @@
           left:0px; bottom:0px; border-radius:15px; opacity:20%"></el-image>
           <!--视频-->
           <video-player 
-          class="video-player vjs-custom-skin" 
+          class="video-player vjs-custom-skin vjs-big-play-centered" 
           ref="videoPlayer" 
           :playsinline="true" 
           :options="playerOptions">
@@ -273,7 +273,7 @@
 // @ is an alias to /src
 import {videoPlayer} from "vue-video-player";
 import "video.js/dist/video-js.css";
-import { getComment } from '@/api/board';
+import { getComment,sendComment } from '@/api/board';
 
 export default {
   name: 'Home',
@@ -282,9 +282,10 @@ export default {
   },
   created(){
     getComment().then(response=>{
+      this.comments=eval(response.data.comments);
         this.couponList=response.data.couponList; 
     }).catch(()=>{
-        this.$message.error("当前网络异常");
+        this.$message.error("There's something wrong with your webnet.");
     })
   },
   methods:{
@@ -333,7 +334,38 @@ export default {
         return;
       }
       //发送api请求
+      Date.prototype.Format = function (fmt) { // author: meizz
+      var o = {
+          "M+": this.getMonth() + 1, // 月份
+          "d+": this.getDate(), // 日
+          "h+": this.getHours(), // 小时
+          "m+": this.getMinutes(), // 分
+          "s+": this.getSeconds(), // 秒
+          "q+": Math.floor((this.getMonth() + 3) / 3), // 季度
+          "S": this.getMilliseconds() // 毫秒
+        };
+        if (/(y+)/.test(fmt))
+          fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+          if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+      }
+      let datetime=new Date().Format("yyyy-MM-dd hh:mm")
+      
+      let param={
+        firstname:this.firstname,
+        lastname:this.lastname,
+        time:datetime,
+        content:this.content
+      }
+      //发送api请求
+      sendComment(param).then(response=>{
+        //查看
 
+        console.log(response)
+      }).catch(()=>{
+          this.$message.error("There's something wrong with your webnet.");
+      })
     }
   },
   data(){
@@ -344,7 +376,7 @@ export default {
       content:'',
       playerOptions: {
         playbackRates: [0.5,1.0,  2.0], //播放速度
-        autoplay: true, //如果true,浏览器准备好时开始回放。
+        autoplay: false, //如果true,浏览器准备好时开始回放。
         muted: false, // 默认情况下将会消除任何音频。
         loop: true, // 导致视频一结束就重新开始。
         preload: "auto", // 建议浏览器在<video>加载元素后是否应该开始下载视频数据。auto浏览器选择最佳行为,立即开始加载视频（如果浏览器支持）
