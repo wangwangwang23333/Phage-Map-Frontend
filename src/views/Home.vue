@@ -43,16 +43,23 @@
         </b>
       </div>
     </div>
+    <div style="background-color: #f9faff;height: 5%;">&nbsp;&nbsp;</div>
     <!--三张卡片-->
-    <el-card>
+    <el-card style="margin-top: 0%;">
       <el-container style="margin-top: 10vh;width: 80%;">
         <el-main>
           <el-image :src="require('@/assets/1.png')"></el-image>
         </el-main>
-        <el-aside style="width: 40%;text-align: left;">
-          <div style="margin-top: 10vh;margin-left: 20%;">
+        <el-aside style="width: 40%;
+        text-align: left;
+        background-image: url('https://z3.ax1x.com/2021/09/03/hyVGGV.png');
+        background-repeat: no-repeat;
+        background-position: 20% 0%;
+        ">
+          <div style="margin-top: 10vh;margin-left: 20%;"
+          >
             <h1>Bacteriophage Bay</h1>
-          <p>We put data in a well-organized database.
+          <p style="color:darkgray;">We put data in a well-organized database.
             <br>
             By click graph or title, you can download it.</p>
           </div>
@@ -60,12 +67,17 @@
       </el-container>
     </el-card>
 
-    <el-card>
+    <div style="background-color: #f9faff;height: 5%;">&nbsp;&nbsp;</div>
+
+    <el-card style="margin-top: 0%;">
       <el-container style="margin-top: 10vh;width: 80%;">    
-        <el-aside style="width: 60%;text-align: left;">
+        <el-aside style="width: 60%;text-align: left;
+        background-image: url('https://z3.ax1x.com/2021/09/03/hyV8P0.png');
+        background-repeat: no-repeat;
+        background-position: 40% 0%;">
           <div style="margin-top: 10vh;margin-left: 40%;">
             <h1>Phage Finder</h1>
-          <p>By searching, people can find phages<br>
+          <p style="color:darkgray;">By searching, people can find phages<br>
             that target specific bacteria</p>
           </div>
         </el-aside>
@@ -75,27 +87,34 @@
       </el-container>
     </el-card>
 
-    <el-card>
+    <div style="background-color: #f9faff;height: 5%;">&nbsp;&nbsp;</div>
+
+    <el-card style="margin-top: 0%;">
       <el-container style="margin-top: 10vh;width: 80%;">
         <el-main>
           <el-image :src="require('@/assets/1.png')"></el-image>
         </el-main>
-        <el-aside style="width: 40%;text-align: left;">
+        <el-aside style="width: 40%;text-align: left;
+        background-image: url('https://z3.ax1x.com/2021/09/03/hyVJ2T.png');
+        background-repeat: no-repeat;
+        background-position: 20% 0%;">
           <div style="margin-top: 10vh;margin-left: 20%;">
             <h1>Interactive MAP</h1>
-          <p>A visual network diagram of the<br>
+          <p style="color:darkgray;">A visual network diagram of the<br>
             Phage-Bacteria interactions </p>
           </div>
         </el-aside>
       </el-container>
     </el-card>
 
+    <div style="margin-top:5%;background-color: #f9faff;height: 5%;">&nbsp;&nbsp;</div>
+
     <div>
-      <el-container style="margin-top: 10vh;width: 80%;margin-left: 10%;">    
+      <el-container style="margin-top: 5vh;width: 90%;margin-left: 5%;">    
         <el-aside style="width: 60%;text-align: left;">
-          <div style="margin-top: 10vh;margin-left: 10%;overflow: hidden;">
+          <div style="margin-top: 10vh;overflow: hidden;">
             <!--两行三列-->
-            <el-row :gutter="20" >
+            <el-row :gutter="24" >
               <el-col :span="8" v-for="(item,i) in introduction" :key="i">
                 <div class="grid-content bg-purple" style="margin-bottom: 3vh;">
                   <i class="el-icon-bell">Highlight{{i+1}}</i>
@@ -117,7 +136,7 @@
     </div>
 
 
-
+    <div style="background-color: #f9faff;height: 5%;">&nbsp;&nbsp;</div>
     
     <!--展现已经存在的留言-->
     <div>
@@ -172,56 +191,64 @@
   
         </el-pagination>
   
-  
+        <!--分割线-->
+        <el-divider></el-divider>
+        <!--评论区-->
+        <div style="margin:0 auto" id="commentNumText">
+          <strong>Please leave your comment here</strong>
+        </div>
+        
+        <div style="margin-top: 10vh;margin-bottom: 5vh;">
+          <el-container>
+            <el-main>
+              <el-row style="width: 80%;margin-left: 10%;">
+                <el-col :span="11">
+                  <div class="sub-title" style="margin-left: -65%;">First Name</div>
+                  <el-input
+                  placeholder="Your First Name"
+                  prefix-icon="el-icon-user-solid"
+                  v-model="firstname">
+                  </el-input>
+                </el-col>
+                <el-col :span="2">
+                  &nbsp;
+                </el-col>
+                <el-col :span="11">
+                  <div class="sub-title" style="margin-left: -65%;">Last Name</div>
+                  <el-input
+                  placeholder="Your Last Name"
+                  prefix-icon="el-icon-user-solid"
+                  v-model="lastname">
+                  </el-input>
+                </el-col>
+              </el-row>
+              <el-row style="width: 80%;margin-left: 10%;margin-top: 5%;">
+                <el-col :span="24">
+                  <div class="sub-title" style="margin-left: -85%;">Message</div>
+                  <el-input
+                  type="textarea"
+                  rows=5
+                  placeholder="Input the content here"
+                  prefix-icon="el-icon-user-solid"
+                  maxlength="256"
+                  show-word-limit
+                  v-model="content">
+                  </el-input>
+                </el-col>
+              </el-row>
+              <el-button style="margin-top: 5%;" type="primary" plain @click="addComment()">Submit</el-button>
+            </el-main>
+            <el-aside style="width: 40%;">
+              <el-image :src="require('@/assets/biglogo.png')"></el-image>
+            </el-aside>
+          </el-container>
+        </div>
+
       </el-card >
     </div>
 
     <!--留言区-->
-    <div style="margin-top: 10vh;margin-bottom: 5vh;box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
-      <el-container>
-        <el-main>
-          <el-row style="width: 80%;margin-left: 10%;">
-            <el-col :span="11">
-              <div class="sub-title" style="margin-left: -65%;">First Name</div>
-              <el-input
-              placeholder="Your First Name"
-              prefix-icon="el-icon-user-solid"
-              v-model="firstname">
-              </el-input>
-            </el-col>
-            <el-col :span="2">
-              &nbsp;
-            </el-col>
-            <el-col :span="11">
-              <div class="sub-title" style="margin-left: -65%;">Last Name</div>
-              <el-input
-              placeholder="Your Last Name"
-              prefix-icon="el-icon-user-solid"
-              v-model="lastname">
-              </el-input>
-            </el-col>
-          </el-row>
-          <el-row style="width: 80%;margin-left: 10%;margin-top: 5%;">
-            <el-col :span="24">
-              <div class="sub-title" style="margin-left: -85%;">Message</div>
-              <el-input
-              type="textarea"
-              rows=5
-              placeholder="Input the content here"
-              prefix-icon="el-icon-user-solid"
-              maxlength="256"
-              show-word-limit
-              v-model="content">
-              </el-input>
-            </el-col>
-          </el-row>
-          <el-button style="margin-top: 5%;" type="primary" plain @click="addComment()">Submit</el-button>
-        </el-main>
-        <el-aside style="width: 40%;">
-          <el-image :src="require('@/assets/biglogo.png')"></el-image>
-        </el-aside>
-      </el-container>
-    </div>
+    
 
 
     <!--联系-->
@@ -287,6 +314,7 @@ export default {
     }).catch(()=>{
         this.$message.error("There's something wrong with your webnet.");
     })
+    this.commentNum=this.comments.length;
   },
   methods:{
     seeVideo(){
@@ -434,6 +462,12 @@ export default {
           lastname:"Wang",
           time:'2021/9/2 22:35',
           content:"It is really a great website, and I'm totoally obsseseed with it!"
+        },
+        {
+          firstname:'Jacky',
+          lastname:"Li",
+          time:'2021/9/3 10:20',
+          content:"Your website definitely helps me a lot since I've been finding such a web for a long time."
         }
       ]
     }
