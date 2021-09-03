@@ -25,7 +25,10 @@
     </div>
 
     <div style="margin-top: 10%;">
-      <b style="color: orange;font-size: x-large;">Get Started</b>
+      <div style="background-color: #f9faff;line-height: 10vh;">
+        <b style="color: orange;font-size: x-large;">Get Started</b>
+      </div>
+      
       <div style="width: 80%;margin-left: 10%;">
         <el-divider></el-divider>
       </div>
@@ -48,15 +51,19 @@
     <el-card style="margin-top: 0%;">
       <el-container style="margin-top: 10vh;width: 80%;">
         <el-main>
-          <el-image :src="require('@/assets/1.png')"></el-image>
+          <el-image :src="require('@/assets/1.png')"
+          @click="jumpTo(0)"
+          style="cursor:pointer;"></el-image>
         </el-main>
         <el-aside style="width: 40%;
         text-align: left;
         background-image: url('https://z3.ax1x.com/2021/09/03/hyVGGV.png');
         background-repeat: no-repeat;
         background-position: 20% 0%;
-        ">
-          <div style="margin-top: 10vh;margin-left: 20%;"
+        "
+        >
+          <div style="margin-top: 10vh;margin-left: 20%;cursor:pointer;"
+          @click="jumpTo(0)"
           >
             <h1>Bacteriophage Bay</h1>
           <p style="color:darkgray;">We put data in a well-organized database.
@@ -75,14 +82,17 @@
         background-image: url('https://z3.ax1x.com/2021/09/03/hyV8P0.png');
         background-repeat: no-repeat;
         background-position: 40% 0%;">
-          <div style="margin-top: 10vh;margin-left: 40%;">
+          <div style="margin-top: 10vh;margin-left: 40%;cursor: pointer;"
+          @click="jumpTo(1)">
             <h1>Phage Finder</h1>
           <p style="color:darkgray;">By searching, people can find phages<br>
             that target specific bacteria</p>
           </div>
         </el-aside>
         <el-main>
-          <el-image :src="require('@/assets/2.png')"></el-image>
+          <el-image :src="require('@/assets/2.png')"
+          @click="jumpTo(1)"
+          style="cursor:pointer;"></el-image>
         </el-main>
       </el-container>
     </el-card>
@@ -92,13 +102,16 @@
     <el-card style="margin-top: 0%;">
       <el-container style="margin-top: 10vh;width: 80%;">
         <el-main>
-          <el-image :src="require('@/assets/1.png')"></el-image>
+          <el-image :src="require('@/assets/1.png')"
+          @click="jumpTo(2)"
+          style="cursor:pointer;"></el-image>
         </el-main>
         <el-aside style="width: 40%;text-align: left;
         background-image: url('https://z3.ax1x.com/2021/09/03/hyVJ2T.png');
         background-repeat: no-repeat;
         background-position: 20% 0%;">
-          <div style="margin-top: 10vh;margin-left: 20%;">
+          <div style="margin-top: 10vh;margin-left: 20%;cursor: pointer;"
+          @click="jumpTo(2)">
             <h1>Interactive MAP</h1>
           <p style="color:darkgray;">A visual network diagram of the<br>
             Phage-Bacteria interactions </p>
@@ -322,6 +335,17 @@ export default {
     },
     handleClose(){
       this.dialogVisible=false;
+    },
+    jumpTo(index){
+      if(index==0){
+        this.$router.push({path:"/bay"});
+      }
+      else if (index==1){
+        this.$router.push({path:"/finder"});
+      }
+      else{
+        this.$router.push({path:"/map"});
+      }
     },
     //发送留言
     addComment(){

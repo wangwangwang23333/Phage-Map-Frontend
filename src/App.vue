@@ -1,12 +1,32 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <!--导航栏-->
+    <div style="text-align: left;margin-top: 3%;"> 
+      <el-button type="text" style="margin-left: 10%;" @click="jumpToHomePage()">HomePage</el-button>
+      <span style="float: right;margin-right: 10%;">
+        <el-button @click="downloadFile()">Docs</el-button>
+        <el-button style="margin-left: 0;" type="primary" plain @click="openGitHub()">Git Hub</el-button>
+      </span>
     </div>
     <router-view style="width: 80vw;margin-left: 10vw;"/>
   </div>
 </template>
+
+<script>
+export default{
+  methods:{
+    jumpToHomePage(){
+      this.$router.push({path:"/"});
+    },
+    openGitHub(){
+      window.open("https://github.com/wangwangwang23333/igem-web")
+    },
+    downloadFile(){
+      alert('下载文件尚未完成');
+    }
+  }
+}
+</script>
 
 <style>
 #app {
