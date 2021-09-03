@@ -1,16 +1,92 @@
 <template>
     <div>
         <!--width,height 画布的宽度，高度。 可以是百分比或像素，一般在dom元素上设置 -->
-        <el-row >
-            <el-col id="network_id" class="network" style="height:80vh" :span="16"></el-col>
-            <el-col :span="8">
+        <div v-if="showTable">
+            
+            <el-table
+                ref="multipleTable"
+                :data="tableData"
+                tooltip-effect="dark"
+                style="width: 100%"
+                empty-text="No result now"
+                @selection-change="handleSelectionChange">
+                <el-table-column
+                type="selection"
+                width="55">
+                </el-table-column>
+                <el-table-column
+                prop="id"
+                label="Bacteria ID"
+                width="100">
+                </el-table-column>
+                <el-table-column
+                prop="name"
+                label="Bacteria Name"
+                show-overflow-tooltip>
+                </el-table-column>
+            </el-table>
+            <div id="network_id" class="network" style="height:80vh" :span="15"></div>
+        </div>
+        
+        <el-row v-else>
+            <el-col id="network_id" class="network" style="height:80vh" :span="15"></el-col>
+            <el-col :span="9" >
                 <!--控制栏-->
-                <div v-if="showTable">表格</div>
-                <div v-else>
+                <div style="text-align: left;background-color: #f4fcfc;height: 80vh;">
+                    <div class="sub-title" style="line-height: 5vh;font-weight: bold;margin-left: 5%;margin-top: 3vh;">Searching Condition</div>
+                    <el-input placeholder="Please input here" v-model="searchText"
+                     class="input-with-select"
+                     style="width: 80%;margin-left: 5%;"
+                     >
+                        <el-select v-model="findCondition" slot="prepend" placeholder="Please choose">
+                          <el-option label="Species" value="1"></el-option>
+                          <el-option label="Bacteria" value="2"></el-option>
+                          <el-option label="Phage" value="3"></el-option>
+                        </el-select>
+                        
+                    </el-input>
                     
+                    <!--得分筛选-->
+                    <div class="sub-title" style="line-height: 5vh;font-weight: bold;margin-left: 5%;margin-top: 5vh;">Score</div>
+                    <el-input placeholder="Please input here" v-model="searchScore"
+                     class="input-with-select"
+                     style="width: 80%;margin-left: 5%;"
+                     >
+                        <el-select v-model="scoreCompare" slot="prepend" placeholder="Please choose">
+                            <el-option label="=" value="1"></el-option>
+                            <el-option label=">" value="2"></el-option>
+                            <el-option label="<" value="3"></el-option>
+                            <el-option label=">=" value="4"></el-option>
+                            <el-option label="<=" value="5"></el-option>
+                        </el-select>
+                        
+                    </el-input>
+                    
+                    <!--展示的结点数目-->
+                    <div class="sub-title" style="line-height: 5vh;font-weight: bold;margin-left: 5%;margin-top: 5vh;">Set number of display records</div>
+                    <el-input-number 
+                    v-model="showNodeNumber" 
+                    @change="handleChange" 
+                    :min="1" 
+                    :max="50" 
+                    label="Node Number"
+                    style="margin-left: 5%;"
+                    ></el-input-number>
+                    
+                    <div style="margin-top: 5vh;margin-left: 5%;">
+                        
+                        <el-button type="primary" plain icon="el-icon-search" round>Search</el-button>
+                        <el-button type="info" plain icon="el-icon-download" round>Download</el-button>
+                    </div>
+
+                    <!--下面是介绍-->
+                    <div style="margin-top: 5vh;margin-left: 5%;">
+                        这里直接做一张图介绍
+                    </div>
                 </div>
             </el-col>
         </el-row>
+
         <el-dialog title="测试框" :visible.sync="dialogVisible" width="width">
             <div>xxxxxx</div>
             <div slot="footer">
@@ -29,7 +105,13 @@
         },
         data() {
             return {
+                //检索条件
+                findCondition:"1",
+                searchText:'',
+                scoreCompare:"4",
                 dialogVisible: false,
+                searchScore:'0',
+                showNodeNumber:10,
                 nodes: [],
                 edges: [],
                 // network:null,
@@ -89,7 +171,9 @@
                     { from: 4, to: 7, label: "step2" }
                 ],
                 options: {},
-                data: {}
+                data: {},
+                //表格数据
+                tableData:[]
             };
         },
         methods: {
@@ -232,6 +316,10 @@
                 let _this = this;
                 _this.resetAllNodes();
                 _this.network.stabilize();
+            },
+
+            handleSelectionChange(){
+
             }
         },
 
@@ -251,4 +339,11 @@
     };
 </script>
 <style lang="less">
+
+</style>
+
+<style>
+    .el-select .el-input {
+    width: 130px;
+  }
 </style>
