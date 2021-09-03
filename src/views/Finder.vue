@@ -46,7 +46,8 @@
 
           <!--待完成的地图模块-->
           <div>
-              此处为地图模块
+              <!--搜索框-->
+              <ResultMap :showTable="false"/>
           </div>
 
           <!--联系-->
@@ -67,7 +68,12 @@
 </template>
 
 <script>
+import ResultMap from '@/components/ResultMap.vue'
+
 export default{
-    name:'Finder'
+    name:'Finder',
+    components:{
+        ResultMap
+    }
 }
 </script>

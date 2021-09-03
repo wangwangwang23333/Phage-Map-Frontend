@@ -38,7 +38,8 @@
 
           <!--待完成的地图模块-->
           <div>
-              此处为地图模块
+              <!--搜索框-->
+              <ResultMap :showTable="true"/>
           </div>
 
           <!--联系-->
@@ -59,7 +60,11 @@
 </template>
 
 <script>
+import ResultMap from '@/components/ResultMap.vue'
 export default{
-    name:'Map'
+    name:'Map',
+    components:{
+        ResultMap
+    }
 }
 </script>
