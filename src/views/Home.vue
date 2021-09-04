@@ -7,13 +7,13 @@
             <p style="font-size: large;">Phage Microbiome Assist Phagotherapy</p>
             <div style="margin-top: 10px;">
               <b style="color: #409EFF;
-            font-size: xx-large;"> Phage-MAP</b>
+            font-size: xxx-large;font-family: 'FZHeiBJW'"> Phage-MAP</b>
             </div>
             <p style="font-size: medium;color: grey;">With the help of Phage-MAP, doctors can quickly find the phage for patients infected with superbugs.</p>
           </div>
           <!--空白部分-->
           <div style="margin-top: 10%;">
-            <el-button type="primary" style="border-radius: 10px;">Get Started!</el-button>
+            <el-button type="primary" style="border-radius: 10px;" @click="gotoStart()">Get Started!</el-button>
             <el-button style="border-radius: 10px;" @click="seeVideo()">See Illustrations</el-button>
           </div>
         </el-aside>
@@ -24,7 +24,7 @@
       </el-container>
     </div>
 
-    <div style="margin-top: 10%;">
+    <div style="margin-top: 5%;" ref="start">
       <div style="background-color: #f9faff;line-height: 10vh;">
         <b style="color: orange;font-size: x-large;">Get Started</b>
       </div>
@@ -32,7 +32,7 @@
       <div style="width: 80%;margin-left: 10%;">
         <el-divider></el-divider>
       </div>
-      <div style="margin-bottom: 10vh;">
+      <div style="margin-bottom: 5vh; font-family: 'goodFont';font-size: large;">
         <b>
           Extensive use of antibiotics! Emergence of superbugs!
         </b>
@@ -65,7 +65,7 @@
           <div style="margin-top: 10vh;margin-left: 20%;cursor:pointer;"
           @click="jumpTo(0)"
           >
-            <h1>Bacteriophage Bay</h1>
+            <h1 style="font-size: x-large;">Bacteriophage Bay</h1>
           <p style="color:darkgray;">We put data in a well-organized database.
             <br>
             By click graph or title, you can download it.</p>
@@ -84,7 +84,7 @@
         background-position: 40% 0%;">
           <div style="margin-top: 10vh;margin-left: 40%;cursor: pointer;"
           @click="jumpTo(1)">
-            <h1>Phage Finder</h1>
+            <h1 style="font-size: x-large;">Phage Finder</h1>
           <p style="color:darkgray;">By searching, people can find phages<br>
             that target specific bacteria</p>
           </div>
@@ -112,7 +112,7 @@
         background-position: 20% 0%;">
           <div style="margin-top: 10vh;margin-left: 20%;cursor: pointer;"
           @click="jumpTo(2)">
-            <h1>Interactive MAP</h1>
+            <h1 style="font-size: x-large;">Interactive MAP</h1>
           <p style="color:darkgray;">A visual network diagram of the<br>
             Phage-Bacteria interactions </p>
           </div>
@@ -180,7 +180,7 @@
                 {{comment.lastname}}</span>
             <br><br>
             <el-divider></el-divider>
-            <span class="commentSize" >
+            <span class="commentSize" style="font-family: 'goodFont';">
                   {{comment.content}}</span>
             <br>
   
@@ -208,10 +208,10 @@
         <el-divider></el-divider>
         <!--评论区-->
         <div style="margin:0 auto" id="commentNumText">
-          <strong>Please leave your comment here</strong>
+          <strong style="font-family: 'FZHeiBJW';font-size: x-large;">Please leave your comment here</strong>
         </div>
         
-        <div style="margin-top: 10vh;margin-bottom: 5vh;">
+        <div style="margin-top: 5vh;margin-bottom: 5vh;">
           <el-container>
             <el-main>
               <el-row style="width: 80%;margin-left: 10%;">
@@ -265,10 +265,10 @@
 
 
     <!--联系-->
-    <div style="background-color: #40a0ff86;width: 80%;margin-left: 10%;border-radius: 30px;">
+    <div style="font-family: 'goodFont';background-color: #40a0ff86;width: 80%;margin-left: 10%;border-radius: 30px;">
       <div style="margin-top: 5vh;">
         <br><br>
-        <b style="font-size: xx-large;">CONTACTS</b>
+        <b style="font-size: xx-large;;">CONTACTS</b>
         <p style="color: white;">If you have any feedback, please contact us</p>
         <b>EMAIL</b>
         <p style="color: white;">tj_software2021@163.com</p>
@@ -418,7 +418,11 @@ export default {
       }).catch(()=>{
           this.$message.error("There's something wrong with your webnet.");
       })
+    },
+    gotoStart(){
+      this.$refs["start"].scrollIntoView(true);
     }
+
   },
   data(){
     return{
@@ -500,6 +504,7 @@ export default {
 </script>
 
 <style scoped>
+  @import "../assets/css/font.css";
   /*#ratings{*/
   /*  display: block;*/
   

@@ -1,13 +1,13 @@
 <template>
-<div class="home">
+<div class="home" ref="home">
     <div style="margin-top: 5vh;">
     <el-container>
-        <el-aside style="width: 30vw;margin-left: 10vw;text-align: left;">
+        <el-aside style="width: 40vw;margin-left: 10vw;text-align: left;">
         <div style="margin-top: 5vh;width: 80%;">
             <p style="font-size: large;">We have bulit a database</p>
             <div style="margin-top: 10px;">
             <b style="color: #409EFF;
-            font-size: xx-large;"> Bacteriophage Bay</b>
+            font-size: xxx-large;font-family: 'FZHeiBJW'"> Bacteriophage Bay</b>
             </div>
             <p style="font-size: medium;color: grey;">In this page, you can download the database.</p>
         </div>
@@ -57,7 +57,7 @@
     <div style="background-color: #f9faff;height: 5%;">&nbsp;&nbsp;</div>
 
     <!--联系-->
-    <div style="background-color: #40a0ff86;width: 80%;margin-left: 10%;border-radius: 30px;">
+    <div style="font-family: 'goodFont';background-color: #40a0ff86;width: 80%;margin-left: 10%;border-radius: 30px;">
     <div style="margin-top: 5vh;">
         <br><br>
         <b style="font-size: xx-large;">CONTACTS</b>
@@ -80,6 +80,9 @@
 
 export default {
     name: 'Bay',
+    mounted(){
+        this.$refs["home"].scrollIntoView(true);
+    },
     data(){
         return{
             introduction:[

@@ -1,0 +1,15 @@
+@font-face {
+    font-family: 'FZHeiBJW'; 
+    src: url('../font/FZHeiBJW.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'goodFont'; 
+    src: url('../font/Comic Sans MS.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div ref="home">
         <div style="margin-top: 5vh;">
             <el-container>
               <el-aside style="width: 30vw;margin-left: 10vw;text-align: left;">
@@ -7,13 +7,13 @@
                   <p style="font-size: large;">We provide a tool to</p>
                   <div style="margin-top: 10px;">
                     <b style="color: #409EFF;
-                  font-size: xx-large;">Phage Finder</b>
+                  font-size: xxx-large;font-family: 'FZHeiBJW'">Phage Finder</b>
                   </div>
                   <p style="font-size: medium;color: grey;">Anyone can use it to find the phage associated with target bacterium</p>
                 </div>
                 <!--空白部分-->
                 <div style="margin-top: 10%;">
-                  <el-button type="primary" style="border-radius: 10px;">Get Started!</el-button>
+                  <el-button type="primary" style="border-radius: 10px;" @click="gotoStart()">Get Started!</el-button>
                   
                 </div>
               </el-aside>
@@ -24,14 +24,14 @@
             </el-container>
           </div>
         
-          <div style="margin-top: 10%;">
+          <div style="margin-top: 5%;" ref="start">
             <div style="background-color: #f9faff;line-height: 10vh;">
                 <b style="color: orange;font-size: x-large;">Get Started</b>
             </div>
             <div style="width: 80%;margin-left: 10%;">
               <el-divider></el-divider>
             </div>
-            <div style="margin-bottom: 10vh;">
+            <div style="margin-bottom: 10vh;font-family: 'goodFont';font-size: large;">
               <p style="font-size: x-large;">
                 Bacteria associated with phages
               </p>
@@ -51,7 +51,7 @@
           </div>
 
           <!--联系-->
-            <div style="background-color: #40a0ff86;width: 80%;margin-left: 10%;border-radius: 30px;">
+            <div style="font-family: 'goodFont';background-color: #40a0ff86;width: 80%;margin-left: 10%;border-radius: 30px;">
                 <div style="margin-top: 5vh;">
                     <br><br>
                     <b style="font-size: xx-large;">CONTACTS</b>
@@ -74,6 +74,14 @@ export default{
     name:'Finder',
     components:{
         ResultMap
+    },
+    mounted(){
+        this.$refs["home"].scrollIntoView(true);
+    },
+    methods:{
+      gotoStart(){
+        this.$refs["start"].scrollIntoView(true);
+      }
     }
 }
 </script>

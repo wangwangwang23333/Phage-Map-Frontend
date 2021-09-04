@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div ref="home">
         <div style="margin-top: 5vh;">
             <el-container>
               <el-aside style="width: 30vw;margin-left: 10vw;text-align: left;">
@@ -7,15 +7,15 @@
                   <p style="font-size: large;">More intuitive representation</p>
                   <div style="margin-top: 10px;">
                     <b style="color: #409EFF;
-                  font-size: xx-large;">Interactive MAP</b>
+                  font-size: xxx-large;font-family: 'FZHeiBJW'">Interactive MAP</b>
                   </div>
                   <p style="font-size: medium;color: grey;">A visual network diagram of the Phage-Bacteria
                     interactions 
                     </p>
                 </div>
                 <!--空白部分-->
-                <div style="margin-top: 10%;">
-                  <el-button type="primary" style="border-radius: 10px;">Get Started!</el-button>
+                <div style="margin-top: 10%;" >
+                  <el-button type="primary" style="border-radius: 10px;" @click="gotoStart()">Get Started!</el-button>
                   
                 </div>
               </el-aside>
@@ -26,7 +26,7 @@
             </el-container>
           </div>
         
-          <div style="margin-top: 10%;">
+          <div style="margin-top: 5%;" ref="start">
             <div style="background-color: #f9faff;line-height: 10vh;">
                 <b style="color: orange;font-size: x-large;">Get Started</b>
             </div>
@@ -43,7 +43,7 @@
           </div>
 
           <!--联系-->
-            <div style="background-color: #40a0ff86;width: 80%;margin-left: 10%;border-radius: 30px;">
+            <div style="font-family: 'goodFont';background-color: #40a0ff86;width: 80%;margin-left: 10%;border-radius: 30px;">
                 <div style="margin-top: 5vh;">
                     <br><br>
                     <b style="font-size: xx-large;">CONTACTS</b>
@@ -65,6 +65,14 @@ export default{
     name:'Map',
     components:{
         ResultMap
+    },
+    mounted(){
+        this.$refs["home"].scrollIntoView(true);
+    },
+    methods:{
+      gotoStart(){
+        this.$refs["start"].scrollIntoView(true);
+      }
     }
 }
 </script>
