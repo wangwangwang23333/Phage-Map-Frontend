@@ -7,7 +7,7 @@
                   <p style="font-size: large;">More intuitive representation</p>
                   <div style="margin-top: 10px;">
                     <b style="color: #409EFF;
-                  font-size: xxx-large;font-family: 'FZHeiBJW'">Interactive MAP</b>
+                  font-size: xx-large;font-family: 'FZHeiBJW'">Interactive MAP</b>
                   </div>
                   <p style="font-size: medium;color: grey;">A visual network diagram of the Phage-Bacteria
                     interactions 

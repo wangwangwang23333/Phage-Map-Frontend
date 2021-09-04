@@ -7,7 +7,7 @@
             <p style="font-size: large;">We have bulit a database</p>
             <div style="margin-top: 10px;">
             <b style="color: #409EFF;
-            font-size: xxx-large;font-family: 'FZHeiBJW'"> Bacteriophage Bay</b>
+            font-size: xx-large;font-family: 'FZHeiBJW'"> Bacteriophage Bay</b>
             </div>
             <p style="font-size: medium;color: grey;">In this page, you can download the database.</p>
         </div>

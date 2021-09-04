@@ -7,7 +7,7 @@
                   <p style="font-size: large;">We provide a tool to</p>
                   <div style="margin-top: 10px;">
                     <b style="color: #409EFF;
-                  font-size: xxx-large;font-family: 'FZHeiBJW'">Phage Finder</b>
+                  font-size: xx-large;font-family: 'FZHeiBJW'">Phage Finder</b>
                   </div>
                   <p style="font-size: medium;color: grey;">Anyone can use it to find the phage associated with target bacterium</p>
                 </div>

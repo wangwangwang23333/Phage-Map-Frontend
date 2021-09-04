@@ -7,7 +7,7 @@
             <p style="font-size: large;">Phage Microbiome Assist Phagotherapy</p>
             <div style="margin-top: 10px;">
               <b style="color: #409EFF;
-            font-size: xxx-large;font-family: 'FZHeiBJW'"> Phage-MAP</b>
+            font-size: xx-large;font-family: 'FZHeiBJW'"> Phage-MAP</b>
             </div>
             <p style="font-size: medium;color: grey;">With the help of Phage-MAP, doctors can quickly find the phage for patients infected with superbugs.</p>
           </div>
