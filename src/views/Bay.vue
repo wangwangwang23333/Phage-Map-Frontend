@@ -34,7 +34,11 @@
             <!--两行三列-->
             <el-row :gutter="24" >
             <el-col :span="8" v-for="(item,i) in introduction" :key="i">
-                <div class="grid-content bg-purple" style="margin-bottom: 3vh;">
+                <div class="grid-content bg-purple" style="margin-bottom: 3vh;
+                background-image: url('https://z3.ax1x.com/2021/09/05/hWAd7F.png');
+                background-repeat: no-repeat;
+                background-position: 25% 0%;
+                background-size: 50% 20%;">
                 <i class="el-icon-bell">Highlight{{i+1}}</i>
                 <br>
                 <b>{{item.title}}</b>

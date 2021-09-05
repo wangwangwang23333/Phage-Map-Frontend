@@ -1,14 +1,16 @@
 <template>
   <div id="app">
     <!--导航栏-->
-    <div style="text-align: left;margin-top: 3%;"> 
-      <el-button type="text" style="margin-left: 10%;font-family: 'goodFont';font-size: large;" @click="jumpToHomePage()">HomePage</el-button>
+    <div style="text-align: left;margin-top: 1%;"> 
+      <el-button type="text" style="margin-left: 10%;font-family: 'goodFont';" @click="jumpToHomePage()">HomePage</el-button>
       <span style="float: right;margin-right: 10%;">
-        <el-button @click="downloadFile()" style="font-family: 'goodFont';font-size: large;">Docs</el-button>
-        <el-button style="margin-left: 0;font-family: 'goodFont';font-size: large;" type="primary" plain @click="openGitHub()" >Git Hub</el-button>
+        <el-button @click="downloadFile()" style="font-family: 'goodFont';">Docs</el-button>
+        <el-button style="margin-left: 0;font-family: 'goodFont';" type="primary" plain @click="openGitHub()" >Git Hub</el-button>
       </span>
     </div>
-    <router-view style="width: 80vw;margin-left: 10vw;"/>
+    <!--加一个分割线-->
+    <el-divider ></el-divider>
+    <router-view style="width: 80vw;margin-left: 5vw;"/>
   </div>
 </template>
 

@@ -6,7 +6,7 @@
           <div style="margin-top: 10vh;width: 80%;">
             <p style="font-size: large;">Phage Microbiome Assist Phagotherapy</p>
             <div style="margin-top: 10px;">
-              <b style="color: #409EFF;
+              <b style="color: #3b5a79;
             font-size: xx-large;font-family: 'FZHeiBJW'"> Phage-MAP</b>
             </div>
             <p style="font-size: medium;color: grey;">With the help of Phage-MAP, doctors can quickly find the phage for patients infected with superbugs.</p>
@@ -129,8 +129,15 @@
             <!--两行三列-->
             <el-row :gutter="24" >
               <el-col :span="8" v-for="(item,i) in introduction" :key="i">
-                <div class="grid-content bg-purple" style="margin-bottom: 3vh;">
-                  <i class="el-icon-bell">Highlight{{i+1}}</i>
+                <div class="grid-content bg-purple" 
+                style="margin-bottom: 3vh;
+                background-image: url('https://z3.ax1x.com/2021/09/05/hWAd7F.png');
+                background-repeat: no-repeat;
+                background-position: 25% 0%;
+                background-size: 50% 20%;
+                ">
+                  <i class="el-icon-bell" 
+                  >Highlight{{i+1}}</i>
                   <br>
                   <b>{{item.title}}</b>
                   <p>{{item.description}}</p>
