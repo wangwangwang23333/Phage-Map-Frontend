@@ -8,7 +8,7 @@ axios.defaults.withCredentials = true
 // create an axios instance
 const service = axios.create({
   //baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
-  baseURL:'http://47.100.225.207:8081/api/',
+  baseURL:'http://150.158.185.96:8081/api/',
   timeout: 5000, // request timeout
   async:true,
   crossDomain:true,
@@ -39,6 +39,7 @@ service.interceptors.response.use(
      * You can also judge the status by HTTP Status Code
      */
     response => {
+      console.log('返回值为',response)
       const res = response.data
       // if the custom code is not 200, it is judged as an error.
       if (res.errorCode != 200) {

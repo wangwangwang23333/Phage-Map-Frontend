@@ -16,6 +16,10 @@
 
 <script>
 export default{
+  created(){
+    
+
+  },
   methods:{
     jumpToHomePage(){
       this.$router.push({path:"/"});
@@ -24,6 +28,8 @@ export default{
       window.open("https://github.com/wangwangwang23333/igem-web")
     },
     downloadFile(){
+      //下载文件
+      window.open('static/docs.pdf')
       alert('下载文件尚未完成');
     }
   }

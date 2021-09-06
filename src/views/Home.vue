@@ -175,7 +175,14 @@
         </div>
         
         <br><br>
-        <div style="margin-top:3%" v-for="(comment, index) in comments" :key="index">
+
+
+        <div style="margin-top:3%"  
+        v-for="(comment, index) in
+        (publishedCurrentPage!=commentNum/5?
+        comments.slice(5*publishedCurrentPage-5,5*publishedCurrentPage):
+        comments.slice(5*publishedCurrentPage-5,commentNum)
+        )" :key="index">
           <el-card    class="box-card" style="width: 800px;height: 100%;margin:0 auto">
             <span class="bigFontSize" style="font-size: 15px;float: left;color: #7b7b7b">
               <i class="el-icon-time"></i>
@@ -194,18 +201,15 @@
           </el-card>
           <br>
         </div>
-  
-  
-        
-          <el-pagination
-            v-if="commentNum<4?false:true"
-            layout="prev, pager, next"
-            :page-size="publishedPageSize"
-            :page-count="5"
-            :total="commentNum"
-            @current-change="current_change"
-            style="float: bottom ;padding-bottom: 1%"
-            background
+       
+        <el-pagination
+          v-if="commentNum>=4"
+          layout="prev, pager, next"
+          :page-size="5"
+          :total="commentNum"
+          @current-change="current_change"
+          style="float: bottom ;padding-bottom: 1%"
+          background
         >
         
   
@@ -328,15 +332,21 @@ export default {
     videoPlayer,
   },
   created(){
+    
     getComment().then(response=>{
       this.comments=eval(response.data.comments);
         this.couponList=response.data.couponList; 
     }).catch(()=>{
         this.$message.error("There's something wrong with your webnet.");
     })
+
     this.commentNum=this.comments.length;
   },
   methods:{
+    current_change(publishedCurrentPage){
+      this.publishedCurrentPage=publishedCurrentPage
+      console.log(this.publishedCurrentPage)
+    },
     seeVideo(){
       this.dialogVisible=true;
     },
@@ -417,6 +427,11 @@ export default {
         time:datetime,
         content:this.content
       }
+
+      //自己的数据添加
+      this.comments.push(param)
+      this.commentNum+=1
+
       //发送api请求
       sendComment(param).then(response=>{
         //查看
@@ -437,6 +452,7 @@ export default {
       firstname:'',
       lastname:'',
       content:'',
+      publishedCurrentPage:1,
       playerOptions: {
         playbackRates: [0.5,1.0,  2.0], //播放速度
         autoplay: false, //如果true,浏览器准备好时开始回放。
@@ -495,15 +511,39 @@ export default {
         {
           firstname:'Mingjie',
           lastname:"Wang",
-          time:'2021/9/2 22:35',
+          time:'2021-09-02 22:35',
           content:"It is really a great website, and I'm totoally obsseseed with it!"
         },
         {
           firstname:'Jacky',
           lastname:"Li",
-          time:'2021/9/3 10:20',
+          time:'2021-09-03 10:20',
           content:"Your website definitely helps me a lot since I've been finding such a web for a long time."
-        }
+        },
+        {
+          firstname:'Ziniu',
+          lastname:'Niu',
+          time:'2021-09-04 01:44',
+          content:'IGEM HP GAME IS SO FUCKKKKKKKKKKING FUNNY!!'
+        },
+        {
+          firstname:'Liyou',
+          lastname:'Wang',
+          time:'2021-09-04 11:20',
+          content:'A great website but will be better with some more beautiful picture.'
+        },
+        {
+          firstname:'正一',
+          lastname:'卓',
+          time:'2021-09-04 19:21',
+          content:'这个网站真的很赞，我真的哭死'
+        },
+        {
+          firstname:'Zihan',
+          lastname:'Zhang',
+          time:'2021-09-05 10:37',
+          content:'Good website which helps me in an exam'
+        },
       ]
     }
   }
