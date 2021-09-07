@@ -270,8 +270,6 @@
 
       </el-card >
     </div>
-
-    <!--留言区-->
     
 
 
@@ -286,8 +284,13 @@
         <b>ADDRESS</b>
         <p style="color: white;">Tongji University, No.1239 siping Road, Yangpu District, Shanghai</p>
         <br>
+        
       </div>
+      <button @click="jumpToAdmin()"
+      style="float: right;border:none;width: 1vw;height: 1vh;">   </button>  
     </div>
+    <!--跳转到管理员-->
+   
     <!--播放视频界面-->
     <div>
       <el-dialog
@@ -348,6 +351,9 @@ export default {
     current_change(publishedCurrentPage){
       this.publishedCurrentPage=publishedCurrentPage
       console.log(this.publishedCurrentPage)
+    },
+    jumpToAdmin(){
+      this.$router.push({path:"/admin"});
     },
     seeVideo(){
       this.dialogVisible=true;

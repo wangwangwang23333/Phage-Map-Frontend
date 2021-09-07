@@ -25,3 +25,13 @@ export function sendComment(data) {
         data: param
     })
 }
+
+
+export function deleteComment(data){
+  console.log(data)
+  return request({  
+    url: '/comment/delete/'+data,
+    method: 'delete',
+    data:''
+  })
+}
