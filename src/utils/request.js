@@ -12,6 +12,9 @@ const service = axios.create({
   timeout: 5000, // request timeout
   async:true,
   crossDomain:true,
+  headers: { 
+    'Content-Type': 'application/json'
+  }
 })
 
 // request interceptor
@@ -39,14 +42,13 @@ service.interceptors.response.use(
      * You can also judge the status by HTTP Status Code
      */
     response => {
-      console.log('返回值为',response)
-      const res = response.data
+      
       // if the custom code is not 200, it is judged as an error.
-      if (res.errorCode != 200) {
+      if (response.status != 200) {
 
-        return Promise.reject(new Error(res.msg || 'Error'))
+        return Promise.reject(new Error(response.statusText || 'Error'))
       } else {
-        return res
+        return response
       }
     },
     error => {

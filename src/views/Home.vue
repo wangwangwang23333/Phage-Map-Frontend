@@ -159,7 +159,7 @@
     <div style="background-color: #f9faff;height: 5%;">&nbsp;&nbsp;</div>
     
     <!--展现已经存在的留言-->
-    <div>
+    <div ref="commentBoard">
       <el-card shadow="hover" style="width:95%;margin:0 auto;border-radius:15px" >
         <div slot="header">
           <h2>
@@ -334,10 +334,12 @@ export default {
   created(){
     
     getComment().then(response=>{
-      this.comments=eval(response.data.comments);
-        this.couponList=response.data.couponList; 
+      this.comments=eval(response.data).reverse();
+      //按时间倒序排列
+      this.commentNum=this.comments.length
+      this.couponList=response.data.couponList; 
     }).catch(()=>{
-        this.$message.error("There's something wrong with your webnet.");
+        this.$message.error("There's something wrong with your network.");
     })
 
     this.commentNum=this.comments.length;
@@ -427,18 +429,31 @@ export default {
         time:datetime,
         content:this.content
       }
-
-      //自己的数据添加
-      this.comments.push(param)
-      this.commentNum+=1
-
+      
       //发送api请求
       sendComment(param).then(response=>{
-        //查看
+        response;
 
-        console.log(response)
+        //自己的数据添加
+        this.comments.splice(0,0,param)
+        this.commentNum+=1
+
+        //提醒添加成功
+        this.$message({
+          message: 'You have successfully commented!!',
+          type: 'success'
+        });
+
+        //清空内容
+        this.firstname=''
+        this.lastname=''
+        this.content=''
+
+        //跳转到评论区
+        this.$refs["commentBoard"].scrollIntoView(true);
+
       }).catch(()=>{
-          this.$message.error("There's something wrong with your webnet.");
+          this.$message.error("There's something wrong with your network.");
       })
     },
     gotoStart(){
