@@ -75,7 +75,10 @@
                     
                     <div style="margin-top: 5vh;margin-left: 5%;">
                         
-                        <el-button type="primary" plain icon="el-icon-search" round>Search</el-button>
+                        <el-button 
+                        type="primary" 
+                        @click="clickSearch()"
+                        plain icon="el-icon-search" round>Search</el-button>
                         <el-button type="info" plain icon="el-icon-download" round>Download</el-button>
                     </div>
 
@@ -98,20 +101,21 @@
 </template>
 <script>
     import Vis from "vis";
+    import { findBacteriaByKey } from '@/api/finder';
     export default {
         name: 'ResultMap',
-        props:{
-            showTable:Boolean
+        props: {
+            showTable: Boolean
         },
         data() {
             return {
                 //检索条件
-                findCondition:"1",
-                searchText:'',
-                scoreCompare:"4",
+                findCondition: "1",
+                searchText: '',
+                scoreCompare: "4",
                 dialogVisible: false,
-                searchScore:'0',
-                showNodeNumber:10,
+                searchScore: '0',
+                showNodeNumber: 10,
                 nodes: [],
                 edges: [],
                 // network:null,
@@ -173,7 +177,7 @@
                 options: {},
                 data: {},
                 //表格数据
-                tableData:[]
+                tableData: []
             };
         },
         methods: {
@@ -318,8 +322,22 @@
                 _this.network.stabilize();
             },
 
-            handleSelectionChange(){
+            handleSelectionChange() {
 
+            },
+
+            handleChange(){
+
+            },
+
+            //处理搜索内容
+            clickSearch() {
+                //this.searchText
+                findBacteriaByKey(this.searchText).then(response=>{
+                    console.log(response)
+                }).catch(()=>{
+                    this.$message.error("There's something wrong with your network.");
+                })
             }
         },
 

@@ -81,7 +81,9 @@ export default{
     methods:{
       gotoStart(){
         this.$refs["start"].scrollIntoView(true);
-      }
-    }
+      },
+
+    },
+
 }
 </script>
