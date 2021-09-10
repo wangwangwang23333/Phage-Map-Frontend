@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div style="margin-top: 5vh;">
+    <div style="margin-top: 5vh; background: #2c342c; background-image: url('src/assets/home/line-above.svg')">
       <el-container>
         <el-aside style="width: 30vw;margin-left: 10vw;text-align: left;">
           <div style="margin-top: 10vh;width: 80%;">

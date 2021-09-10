@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "cors": "^2.8.5",
     "element-ui": "^2.15.6",
     "js-cookie": "^3.0.1",
     "vis": "^4.21.0-EOL",
