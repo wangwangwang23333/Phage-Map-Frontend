@@ -20,7 +20,7 @@
     </div>
     <!--加一个分割线-->
 
-    <router-view style="width: 80vw;margin-left: 5vw;"/>
+    <router-view/>
   </div>
 </template>
 

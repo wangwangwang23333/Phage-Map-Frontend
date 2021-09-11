@@ -1,3 +1,4 @@
+
 /*
 和留言区有关的api
 */
@@ -18,11 +19,20 @@ export function sendComment(data) {
     /*
     上传一条新的留言
     */
-    let param=new URLSearchParams(data)
-
+    let param= JSON.stringify(data)
     return request({
         url:'/comment/add',
         method:'post',
-        data:param
+        data: param
     })
+}
+
+
+export function deleteComment(data){
+  console.log(data)
+  return request({  
+    url: '/comment/delete/'+data,
+    method: 'delete',
+    data:''
+  })
 }

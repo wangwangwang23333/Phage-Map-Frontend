@@ -1,17 +1,18 @@
-
 import axios from 'axios'
 
 // 每次请求携带cookies信息
-axios.defaults.headers.post['Content-Type']='application/x-www-form-urlencoded'
 axios.defaults.withCredentials = true
 
 // create an axios instance
 const service = axios.create({
   //baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   baseURL:'http://150.158.185.96:8081/api/',
-  timeout: 5000, // request timeout
+  timeout: 50000, // request timeout
   async:true,
   crossDomain:true,
+  headers: { 
+    'Content-Type': 'application/json'
+  }
 })
 
 // request interceptor
@@ -39,14 +40,13 @@ service.interceptors.response.use(
      * You can also judge the status by HTTP Status Code
      */
     response => {
-      console.log('返回值为',response)
-      const res = response.data
+      
       // if the custom code is not 200, it is judged as an error.
-      if (res.errorCode != 200) {
+      if (response.status != 200) {
 
-        return Promise.reject(new Error(res.msg || 'Error'))
+        return Promise.reject(new Error(response.statusText || 'Error'))
       } else {
-        return res
+        return response
       }
     },
     error => {

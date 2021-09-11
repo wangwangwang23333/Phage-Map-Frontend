@@ -1,401 +1,449 @@
 <template>
   <div class="home">
-    <div style="margin-top: 5vh; background: #2c342c; background-image: url('src/assets/home/line-above.svg')">
-      <el-container>
-        <el-aside style="width: 30vw;margin-left: 10vw;text-align: left;">
-          <div style="margin-top: 10vh;width: 80%;">
-            <p style="font-size: large;">Phage Microbiome Assist Phagotherapy</p>
-            <div style="margin-top: 10px;">
-              <b style="color: #3b5a79;
-            font-size: xx-large;font-family: 'FZHeiBJW'"> Phage-MAP</b>
-            </div>
-            <p style="font-size: medium;color: grey;">With the help of Phage-MAP, doctors can quickly find the phage for patients infected with superbugs.</p>
+    <div
+        style="background-image: linear-gradient(to bottom,#2c342c 0%, #2c342c 90%, rgba(0,0,0,0) 90% , rgba(0,0,0,0) 100%)"
+    >
+      <div style="
+          color: #fcfcfc;
+          padding-top: 5px;
+          background-repeat: no-repeat;
+          background-position: top;
+          background-size: auto;
+          "
+           :style="{'background-image': 'url(' + require('@/assets/home/line-above.svg') + ') '}"
+      >
+        <!--      大标题-->
+        <div style="display: inline-flex; font-size: 4em; padding-top: 2.5em">
+          <img src="@/assets/logo.png" style="width: 1em; height: 1em; margin-right: .5em; padding-top: 15px">
+          <span style=" font-weight: bold;">Phage-MAP</span>
+        </div>
+
+        <!--      介绍文字-->
+        <div style="font-size: 2.5em; font-weight: 1; padding-top: 1rem">
+          Phage Microbiome Assist <br>
+          Phagotherapy
+        </div>
+
+        <!--      按钮-->
+        <div style="padding-top: 3rem; ">
+          <el-button style="color: #030303; font-weight: normal;"
+                     @click="gotoStart"
+          > Get Started!
+          </el-button>
+        </div>
+
+        <!--        说明-->
+        <div
+            style=" font-size: small; padding-top: .5em; display: inline-block; padding-bottom: 2rem">
+          With the help of Phage-MAP, doctors can quickly find the <br>
+          phage for patients infected with superbugs.
+        </div>
+
+        <!--      嵌入小方块-->
+        <div style="text-align: left; margin-left: 2rem; margin-top: 1rem">
+          <div
+              style="
+          background: #64cccc;
+          text-align: left;
+          padding: 2rem 2rem 0.5rem 0.5rem;
+          display: inline-block;
+          font-weight: bold;
+          font-size: small;
+          color: #fcfcfc;
+        "
+          >
+            ILLUSTRATION <br>
+            VEDIO
           </div>
-          <!--空白部分-->
-          <div style="margin-top: 10%;">
-            <el-button type="primary" style="border-radius: 10px;" @click="gotoStart()">Get Started!</el-button>
-            <el-button style="border-radius: 10px;" @click="seeVideo()">See Illustrations</el-button>
-          </div>
-        </el-aside>
-        <el-main style="text-align: left;">
-          <!--图片-->
-          <el-image :src="require('@/assets/logo.png')"></el-image>
-        </el-main>
-      </el-container>
+        </div>
+
+      </div>
     </div>
 
-    <div style="margin-top: 5%;" ref="start">
-      <div style="background-color: #f9faff;line-height: 10vh;">
-        <b style="color: orange;font-size: x-large;">Get Started</b>
-      </div>
-      
-      <div style="width: 80%;margin-left: 10%;">
-        <el-divider></el-divider>
-      </div>
-      <div style="margin-bottom: 5vh; font-family: 'goodFont';font-size: large;">
-        <b>
-          Extensive use of antibiotics! Emergence of superbugs!
-        </b>
-        <br>
-        <b>
-          How can we treat it?
-        </b>
-        <br>
-        <b>
-          Phagotherapy with the help of Phage-MAP!
-        </b>
-      </div>
+    <!--    介绍视频-->
+    <div style="margin: 3rem 8vw 4rem 8vw">
+      <video-player
+          class="video-player vjs-custom-skin vjs-big-play-centered"
+          ref="videoPlayer"
+          :playsinline="true"
+          :options="playerOptions">
+      </video-player>
     </div>
-    <div style="background-color: #f9faff;height: 5%;">&nbsp;&nbsp;</div>
-    <!--三张卡片-->
-    <el-card style="margin-top: 0%;">
-      <el-container style="margin-top: 10vh;width: 80%;">
-        <el-main>
-          <el-image :src="require('@/assets/1.png')"
-          @click="jumpTo(0)"
-          style="cursor:pointer;"></el-image>
-        </el-main>
-        <el-aside style="width: 40%;
-        text-align: left;
-        background-image: url('https://z3.ax1x.com/2021/09/03/hyVGGV.png');
-        background-repeat: no-repeat;
-        background-position: 20% 0%;
+
+
+    <!--    过渡banner-->
+    <div class="banner" ref="start">
+      <span>
+        Extensive use of antibiotics! Emergence of superbugs. How can we treat it? <br>
+        Phagotherapy with the help of Phage-MAP!
+      </span>
+    </div>
+
+    <!--    分区介绍-->
+    <div class="sectors">
+
+      <!--      Bacteriophage bay-->
+      <div class="card">
+
+        <!--        左边-->
+        <div class="card-left">
+          <!--        标题-->
+          <div style="display: inline-block; padding-bottom: 2.5rem;">
+            <img src="../assets/home/separater.svg" class="separator">
+            <span class="title" @click="jumpTo(1)"> Bacteriophage Bay </span>
+          </div>
+          <!--          说明-->
+          <div style="padding-bottom: 2.5rem">
+            We put data in a well-organised database.<br>
+            By clicking grass or title, you can download it.
+          </div>
+
+          <!--          按钮-->
+          <!--          TODO: Fix this-->
+          <el-button @click="jumpTo(1)"> DOWNLOAD</el-button>
+        </div>
+
+
+        <!--        右边-->
+        <div class="card-right">
+          <img :src="require('../assets/home/illustration/file.png')">
+        </div>
+
+      </div>
+
+      <!--      Phage finder-->
+      <div class="card">
+
+        <!--        右边-->
+        <div class="card-right" style="text-align: left">
+          <img :src="require('../assets/home/illustration/search.png')">
+        </div>
+
+        <!--        左边-->
+        <div class="card-left">
+          <!--        标题-->
+          <div style="display: inline-block; padding-bottom: 2.5rem;">
+            <img src="../assets/home/separater.svg" class="separator">
+            <span class="title" @click="jumpTo(2)"> Phage Finder </span>
+          </div>
+          <!--          说明-->
+          <div style="padding-bottom: 2.5rem">
+            By searching, people can find phages <br>
+            that target specific bacteria.
+          </div>
+        </div>
+      </div>
+
+      <!--      Interactive map-->
+      <div class="card">
+
+        <!--        左边-->
+        <div class="card-left">
+          <!--        标题-->
+          <div style="display: inline-block; padding-bottom: 2.5rem;">
+            <img src="../assets/home/separater.svg" class="separator">
+            <span class="title" @click="jumpTo(3)"> Interactive MAP </span>
+          </div>
+          <!--          说明-->
+          <div style="padding-bottom: 2.5rem">
+            A visual network diagram of the <br>
+            Phage-Bacteria interactions.
+          </div>
+
+        </div>
+
+        <!--        右边-->
+        <div class="card-right">
+          <img :src="require('../assets/home/illustration/map-dna.png')" style="width: 45%">
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!--    高亮点-->
+    <div style="
+              text-align: left;
+              background-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 93%, white 93%)
+     ">
+
+      <div
+          class="highlight-region"
+          :style="{'background-image': 'url(' + require('@/assets/home/line-below.svg') + ') '}">
+        <div style="overflow: hidden; width: 60%;">
+          <!--两行三列-->
+          <el-row>
+            <el-col :span="8" v-for="(item,i) in introduction" :key="i">
+              <div
+                  :class="{
+                'odd-highlight': (i % 2),
+                'even-highlight': !(i % 2)
+              }">
+                <span style="font-weight: bold">Highlight{{ i + 1 }}</span>
+                <br>
+                <span>{{ item.title }}</span>
+                <p>{{ item.description }}</p>
+              </div>
+            </el-col>
+          </el-row>
+
+        </div>
+      </div>
+
+      <!--      嵌入小方块-->
+      <div style="text-align: left; margin-left: 2rem; margin-top: -3rem">
+        <div
+            style="
+          background: #64cccc;
+          text-align: left;
+          padding: 2rem 2rem 0.5rem 0.5rem;
+          display: inline-block;
+          font-weight: bold;
+          font-size: small;
+          color: #fcfcfc;
         "
         >
-          <div style="margin-top: 10vh;margin-left: 20%;cursor:pointer;"
-          @click="jumpTo(0)"
-          >
-            <h1 style="font-size: x-large;">Bacteriophage Bay</h1>
-          <p style="color:darkgray;">We put data in a well-organized database.
-            <br>
-            By click graph or title, you can download it.</p>
-          </div>
-        </el-aside>
-      </el-container>
-    </el-card>
+          MESSAGE <br>
+          BOARD
+        </div>
+      </div>
 
-    <div style="background-color: #f9faff;height: 5%;">&nbsp;&nbsp;</div>
-
-    <el-card style="margin-top: 0%;">
-      <el-container style="margin-top: 10vh;width: 80%;">    
-        <el-aside style="width: 60%;text-align: left;
-        background-image: url('https://z3.ax1x.com/2021/09/03/hyV8P0.png');
-        background-repeat: no-repeat;
-        background-position: 40% 0%;">
-          <div style="margin-top: 10vh;margin-left: 40%;cursor: pointer;"
-          @click="jumpTo(1)">
-            <h1 style="font-size: x-large;">Phage Finder</h1>
-          <p style="color:darkgray;">By searching, people can find phages<br>
-            that target specific bacteria</p>
-          </div>
-        </el-aside>
-        <el-main>
-          <el-image :src="require('@/assets/2.png')"
-          @click="jumpTo(1)"
-          style="cursor:pointer;"></el-image>
-        </el-main>
-      </el-container>
-    </el-card>
-
-    <div style="background-color: #f9faff;height: 5%;">&nbsp;&nbsp;</div>
-
-    <el-card style="margin-top: 0%;">
-      <el-container style="margin-top: 10vh;width: 80%;">
-        <el-main>
-          <el-image :src="require('@/assets/1.png')"
-          @click="jumpTo(2)"
-          style="cursor:pointer;"></el-image>
-        </el-main>
-        <el-aside style="width: 40%;text-align: left;
-        background-image: url('https://z3.ax1x.com/2021/09/03/hyVJ2T.png');
-        background-repeat: no-repeat;
-        background-position: 20% 0%;">
-          <div style="margin-top: 10vh;margin-left: 20%;cursor: pointer;"
-          @click="jumpTo(2)">
-            <h1 style="font-size: x-large;">Interactive MAP</h1>
-          <p style="color:darkgray;">A visual network diagram of the<br>
-            Phage-Bacteria interactions </p>
-          </div>
-        </el-aside>
-      </el-container>
-    </el-card>
-
-    <div style="margin-top:5%;background-color: #f9faff;height: 5%;">&nbsp;&nbsp;</div>
-
-    <div>
-      <el-container style="margin-top: 5vh;width: 90%;margin-left: 5%;">    
-        <el-aside style="width: 60%;text-align: left;">
-          <div style="margin-top: 10vh;overflow: hidden;">
-            <!--两行三列-->
-            <el-row :gutter="24" >
-              <el-col :span="8" v-for="(item,i) in introduction" :key="i">
-                <div class="grid-content bg-purple" 
-                style="margin-bottom: 3vh;
-                background-image: url('https://z3.ax1x.com/2021/09/05/hWAd7F.png');
-                background-repeat: no-repeat;
-                background-position: 25% 0%;
-                background-size: 50% 20%;
-                ">
-                  <i class="el-icon-bell" 
-                  >Highlight{{i+1}}</i>
-                  <br>
-                  <b>{{item.title}}</b>
-                  <p>{{item.description}}</p>
-                </div>
-              </el-col>
-            </el-row>
-
-          </div>
-        </el-aside>
-        <el-main>
-          <div>
-            <el-image :src="require('@/assets/3.png')"></el-image>
-          </div>
-        </el-main>
-      </el-container>
     </div>
 
 
-    <div style="background-color: #f9faff;height: 5%;">&nbsp;&nbsp;</div>
-    
-    <!--展现已经存在的留言-->
-    <div>
-      <el-card shadow="hover" style="width:95%;margin:0 auto;border-radius:15px" >
-        <div slot="header">
-          <h2>
-              <i class="el-icon-s-comment
-              " id="myIcon" ></i>
-              <span>MESSAGE BOARD</span>
-          </h2>
-  
-        </div>
-  
-        <div style="margin:0 auto" id="commentNumText">
-          <strong>{{commentNum}}</strong>&nbsp;&nbsp; comments
-        </div>
-        
-        <br><br>
+    <!--    评论区-->
+    <div class="comment-board">
+      <div style="width: 33.3%">
+        <div v-for="i in [0, 1]" :key="i" class="comment">
+          <div v-if="curPageContents[i]">
+            <p>
+              {{ curPageContents[i].content }}
+            </p>
 
-
-        <div style="margin-top:3%"  
-        v-for="(comment, index) in
-        (publishedCurrentPage!=commentNum/5?
-        comments.slice(5*publishedCurrentPage-5,5*publishedCurrentPage):
-        comments.slice(5*publishedCurrentPage-5,commentNum)
-        )" :key="index">
-          <el-card    class="box-card" style="width: 800px;height: 100%;margin:0 auto">
-            <span class="bigFontSize" style="font-size: 15px;float: left;color: #7b7b7b">
-              <i class="el-icon-time"></i>
-              Time：{{comment.time}}</span>
-            <br><br>
-           
-            <span class="NameFontSize" style="font-size: 20px;float:left;padding-left: 2%">
-                {{comment.firstname}}&nbsp;&nbsp;
-                {{comment.lastname}}</span>
-            <br><br>
+            <div style="color: #757575">
+              <span> {{ curPageContents[i].firstname }} </span>
+              <span> {{ curPageContents[i].lastname }}</span> <br>
+              <span> {{ curPageContents[i].time }} </span>
+            </div>
             <el-divider></el-divider>
-            <span class="commentSize" style="font-family: 'goodFont';">
-                  {{comment.content}}</span>
-            <br>
-  
-          </el-card>
-          <br>
+          </div>
         </div>
-       
-        <el-pagination
-          v-if="commentNum>=4"
-          layout="prev, pager, next"
-          :page-size="5"
-          :total="commentNum"
-          @current-change="current_change"
-          style="float: bottom ;padding-bottom: 1%"
-          background
-        >
-        
-  
-        </el-pagination>
-  
-        <!--分割线-->
-        <el-divider></el-divider>
+      </div>
+
+      <div style="width: 33.3%">
+        <div v-for="i in [2, 3]" :key="i" class="comment">
+          <div v-if="curPageContents[i]">
+            <p>
+              {{ curPageContents[i].content }}
+            </p>
+
+            <div style="color: #757575">
+              <span> {{ curPageContents[i].firstname }} </span>
+              <span> {{ curPageContents[i].lastname }}</span> <br>
+              <span> {{ curPageContents[i].time }} </span>
+            </div>
+            <el-divider></el-divider>
+          </div>
+        </div>
+      </div>
+
+      <div style="width: 33.3%">
+        <div v-for="i in [4]" :key="i" class="comment">
+          <div v-if="curPageContents[i]">
+            <p>
+              {{ curPageContents[i].content }}
+            </p>
+
+            <div style="color: #757575">
+              <span> {{ curPageContents[i].firstname }} </span>
+              <span> {{ curPageContents[i].lastname }}</span> <br>
+              <span> {{ curPageContents[i].time }} </span>
+            </div>
+            <el-divider></el-divider>
+          </div>
+        </div>
+
+        <!--        换页符-->
+        <div style="display: inline-flex; ">
+          <el-button
+              @click="current_change(publishedCurrentPage - 1)"
+              :disabled="publishedCurrentPage === 1"
+              circle>
+            <i class="el-icon-caret-left"></i>
+          </el-button>
+          <el-button
+              :disabled="publishedCurrentPage >= (commentNum / 5)"
+              @click="current_change(publishedCurrentPage + 1)"
+              circle>
+            <i class="el-icon-caret-right"></i>
+          </el-button>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div style="padding: 4rem 0 4rem 0; background: #2b332b; color: #fcfcfc">
+      <div style="display: inline-flex">
         <!--评论区-->
-        <div style="margin:0 auto" id="commentNumText">
-          <strong style="font-family: 'FZHeiBJW';font-size: x-large;">Please leave your comment here</strong>
-        </div>
-        
-        <div style="margin-top: 5vh;margin-bottom: 5vh;">
-          <el-container>
-            <el-main>
-              <el-row style="width: 80%;margin-left: 10%;">
-                <el-col :span="11">
-                  <div class="sub-title" style="margin-left: -65%;">First Name</div>
-                  <el-input
-                  placeholder="Your First Name"
+        <div style="margin-left: 1rem; width: 40%">
+          <div style="text-align: left; padding-bottom: 2rem; font-weight: normal; font-size: large">
+            Please leave your comments here.
+          </div>
+          <el-row>
+            <el-col :span="11">
+              <el-input
+                  placeholder="First Name"
                   prefix-icon="el-icon-user-solid"
                   v-model="firstname">
-                  </el-input>
-                </el-col>
-                <el-col :span="2">
-                  &nbsp;
-                </el-col>
-                <el-col :span="11">
-                  <div class="sub-title" style="margin-left: -65%;">Last Name</div>
-                  <el-input
-                  placeholder="Your Last Name"
+              </el-input>
+            </el-col>
+            <el-col :span="2">
+              &nbsp;
+            </el-col>
+            <el-col :span="11">
+              <el-input
+                  placeholder="Last Name"
                   prefix-icon="el-icon-user-solid"
                   v-model="lastname">
-                  </el-input>
-                </el-col>
-              </el-row>
-              <el-row style="width: 80%;margin-left: 10%;margin-top: 5%;">
-                <el-col :span="24">
-                  <div class="sub-title" style="margin-left: -85%;">Message</div>
-                  <el-input
+              </el-input>
+            </el-col>
+          </el-row>
+          <el-row style="margin-top: 2rem;">
+            <el-col :span="24">
+              <el-input
                   type="textarea"
                   rows=5
-                  placeholder="Input the content here"
+                  placeholder="Message"
                   prefix-icon="el-icon-user-solid"
                   maxlength="256"
                   show-word-limit
                   v-model="content">
-                  </el-input>
-                </el-col>
-              </el-row>
-              <el-button style="margin-top: 5%;" type="primary" plain @click="addComment()">Submit</el-button>
-            </el-main>
-            <el-aside style="width: 40%;">
-              <el-image :src="require('@/assets/biglogo.png')"></el-image>
-            </el-aside>
-          </el-container>
+              </el-input>
+            </el-col>
+          </el-row>
+          <el-button style="margin: 2rem 0 0 0; color: #030303; font-weight: normal;" plain @click="addComment()">
+            SUBMIT
+          </el-button>
         </div>
 
-      </el-card >
-    </div>
+        <div style="width: 20%"></div>
 
-    <!--留言区-->
-    
+        <!--            contact-->
+        <div style="width: 40%; text-align: left;">
+          <div style="font-size: small">
+            <b style="font-size: x-large; font-weight: 10">Contacts</b>
+            <p>If you have any feedback, please contact us</p>
 
+            <b>EMAIL</b>
+            <div>tj_software2021@163.com</div>
+            <br>
 
-    <!--联系-->
-    <div style="font-family: 'goodFont';background-color: #40a0ff86;width: 80%;margin-left: 10%;border-radius: 30px;">
-      <div style="margin-top: 5vh;">
-        <br><br>
-        <b style="font-size: xx-large;;">CONTACTS</b>
-        <p style="color: white;">If you have any feedback, please contact us</p>
-        <b>EMAIL</b>
-        <p style="color: white;">tj_software2021@163.com</p>
-        <b>ADDRESS</b>
-        <p style="color: white;">Tongji University, No.1239 siping Road, Yangpu District, Shanghai</p>
-        <br>
+            <b>ADDRESS</b>
+            <div>Tongji University, No.1239 siping Road, Yangpu District, Shanghai</div>
+            <br>
+          </div>
+        </div>
       </div>
     </div>
-    <!--播放视频界面-->
-    <div>
-      <el-dialog
-          title="Illustration Video" 
-          :visible.sync="dialogVisible"
-          width="30%"
-          :before-close="handleClose"
-          class="dialogStyle"
-          >
-          <el-image src="https://z3.ax1x.com/2021/07/13/WEEqvn.png" fit="fill" style="position:absolute;
-          left:0px; bottom:0px; border-radius:15px; opacity:20%"></el-image>
-          <!--视频-->
-          <video-player 
-          class="video-player vjs-custom-skin vjs-big-play-centered" 
-          ref="videoPlayer" 
-          :playsinline="true" 
-          :options="playerOptions">
-          </video-player>
-          <el-divider><i class="el-icon-warning-outline"></i></el-divider>
-          
-          <div class="nameStyle" 
-          style="text-align: center;display: block"
-          >See the video to understand how to use our website!</div>
-          
-      </el-dialog>
+
+    <!--跳转到管理员-->
+    <button @click="jumpToAdmin()"
+            style="float: right;border:none;width: 1vw;height: 1vh;"></button>
+    <!--    logos-->
+    <div style="background: white;">
+      <div style="display: inline-flex" class="logo-bar">
+        <img :src="require('../assets/logos/igem.png')">
+        <img :src="require('../assets/logos/se.png')">
+        <img :src="require('../assets/logos/slst.png')">
+        <img :src="require('../assets/logos/dni.png')">
+      </div>
+    </div>
   </div>
 
-  </div>
 
-  
 </template>
 
 <script>
 // @ is an alias to /src
 import {videoPlayer} from "vue-video-player";
 import "video.js/dist/video-js.css";
-import { getComment,sendComment } from '@/api/board';
+import {getComment, sendComment} from '@/api/board';
 
 export default {
   name: 'Home',
   components: {
     videoPlayer,
   },
-  created(){
-    
-    getComment().then(response=>{
-      this.comments=eval(response.data.comments);
-        this.couponList=response.data.couponList; 
-    }).catch(()=>{
-        this.$message.error("There's something wrong with your webnet.");
+  created() {
+
+    getComment().then(response => {
+      this.comments = eval(response.data).reverse();
+      //按时间倒序排列
+      this.commentNum = this.comments.length
+      this.couponList = response.data.couponList;
+    }).catch(() => {
+      this.$message.error("There's something wrong with your network.");
     })
 
-    this.commentNum=this.comments.length;
+    this.commentNum = this.comments.length;
   },
-  methods:{
-    current_change(publishedCurrentPage){
-      this.publishedCurrentPage=publishedCurrentPage
+  methods: {
+    current_change(publishedCurrentPage) {
+      this.publishedCurrentPage = publishedCurrentPage
       console.log(this.publishedCurrentPage)
     },
-    seeVideo(){
-      this.dialogVisible=true;
+    jumpToAdmin() {
+      this.$router.push({path: "/admin"});
     },
-    handleClose(){
-      this.dialogVisible=false;
+    seeVideo() {
+      this.dialogVisible = true;
     },
-    jumpTo(index){
-      if(index==0){
-        this.$router.push({path:"/bay"});
-      }
-      else if (index==1){
-        this.$router.push({path:"/finder"});
-      }
-      else{
-        this.$router.push({path:"/map"});
+    handleClose() {
+      this.dialogVisible = false;
+    },
+    jumpTo(index) {
+      if (index == 0) {
+        this.$router.push({path: "/bay"});
+      } else if (index == 1) {
+        this.$router.push({path: "/finder"});
+      } else {
+        this.$router.push({path: "/map"});
       }
     },
     //发送留言
-    addComment(){
+    addComment() {
       //判断是否输入了FirstName
-      if(this.firstname.length==0){
+      if (this.firstname.length == 0) {
         this.$message({
           message: 'Please input your first name!',
           type: 'warning'
         });
         return;
       }
-      if(this.firstname.length>10){
+      if (this.firstname.length > 10) {
         this.$message({
           message: 'Your first name should not be longer than 10 words!',
           type: 'warning'
         });
         return;
       }
-      if(this.lastname.length==0){
+      if (this.lastname.length == 0) {
         this.$message({
           message: 'Please input your last name!',
           type: 'warning'
         });
         return;
       }
-      if(this.lastname.length>10){
+      if (this.lastname.length > 10) {
         this.$message({
           message: 'Your last name should not be longer than 10 words!',
           type: 'warning'
         });
         return;
       }
-      if(this.content==0){
+      if (this.content == 0) {
         this.$message({
           message: 'The content should not be empty!',
           type: 'warning'
@@ -404,7 +452,7 @@ export default {
       }
       //发送api请求
       Date.prototype.Format = function (fmt) { // author: meizz
-      var o = {
+        var o = {
           "M+": this.getMonth() + 1, // 月份
           "d+": this.getDate(), // 日
           "h+": this.getHours(), // 小时
@@ -417,44 +465,57 @@ export default {
           fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
         for (var k in o)
           if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-            return fmt;
+        return fmt;
       }
-      let datetime=new Date().Format("yyyy-MM-dd hh:mm")
-      
-      let param={
-        firstname:this.firstname,
-        lastname:this.lastname,
-        time:datetime,
-        content:this.content
-      }
+      let datetime = new Date().Format("yyyy-MM-dd hh:mm")
 
-      //自己的数据添加
-      this.comments.push(param)
-      this.commentNum+=1
+      let param = {
+        firstname: this.firstname,
+        lastname: this.lastname,
+        time: datetime,
+        content: this.content
+      }
 
       //发送api请求
-      sendComment(param).then(response=>{
-        //查看
+      sendComment(param).then(response => {
+        response;
 
-        console.log(response)
-      }).catch(()=>{
-          this.$message.error("There's something wrong with your webnet.");
+        //自己的数据添加
+        this.comments.splice(0, 0, param)
+        this.commentNum += 1
+
+        //提醒添加成功
+        this.$message({
+          message: 'You have successfully commented!!',
+          type: 'success'
+        });
+
+        //清空内容
+        this.firstname = ''
+        this.lastname = ''
+        this.content = ''
+
+        //跳转到评论区
+        this.$refs["commentBoard"].scrollIntoView(true);
+
+      }).catch(() => {
+        this.$message.error("There's something wrong with your network.");
       })
     },
-    gotoStart(){
+    gotoStart() {
       this.$refs["start"].scrollIntoView(true);
-    }
+    },
 
   },
-  data(){
-    return{
-      dialogVisible:false,
-      firstname:'',
-      lastname:'',
-      content:'',
-      publishedCurrentPage:1,
+  data() {
+    return {
+      dialogVisible: false,
+      firstname: '',
+      lastname: '',
+      content: '',
+      publishedCurrentPage: 1,
       playerOptions: {
-        playbackRates: [0.5,1.0,  2.0], //播放速度
+        playbackRates: [0.5, 1.0, 2.0], //播放速度
         autoplay: false, //如果true,浏览器准备好时开始回放。
         muted: false, // 默认情况下将会消除任何音频。
         loop: true, // 导致视频一结束就重新开始。
@@ -478,148 +539,239 @@ export default {
           fullscreenToggle: true, //全屏按钮
         },
       },
-      introduction:[
+      introduction: [
         {
           //highlight:'强调',
-          title:'题目1',
-          description:'我是一段很有意思的描述符，你不要觉得我没有意思，呵呵呵呵呵'
+          title: '题目1',
+          description: '我是一段很有意思的描述符，你不要觉得我没有意思，呵呵呵呵呵'
         },
         {
           //highlight:'强调',
-          title:'题目2',
-          description:'我是一段很有意思的描述符，你不要觉得我没有意思，呵呵呵呵呵'
-        },{
+          title: '题目2',
+          description: '我是一段很有意思的描述符，你不要觉得我没有意思，呵呵呵呵呵'
+        }, {
           //highlight:'强调',
-          title:'题目3',
-          description:'我是一段很有意思的描述符，你不要觉得我没有意思，呵呵呵呵呵'
-        },{
+          title: '题目3',
+          description: '我是一段很有意思的描述符，你不要觉得我没有意思，呵呵呵呵呵'
+        }, {
           //highlight:'强调',
-          title:'题目4',
-          description:'我是一段很有意思的描述符，你不要觉得我没有意思，呵呵呵呵呵'
-        },{
+          title: '题目4',
+          description: '我是一段很有意思的描述符，你不要觉得我没有意思，呵呵呵呵呵'
+        }, {
           //highlight:'强调',
-          title:'题目5',
-          description:'我是一段很有意思的描述符，你不要觉得我没有意思，呵呵呵呵呵'
-        },{
+          title: '题目5',
+          description: '我是一段很有意思的描述符，你不要觉得我没有意思，呵呵呵呵呵'
+        }, {
           //highlight:'强调',
-          title:'题目6',
-          description:'我是一段很有意思的描述符，你不要觉得我没有意思，呵呵呵呵呵'
+          title: '题目6',
+          description: '我是一段很有意思的描述符，你不要觉得我没有意思，呵呵呵呵呵'
         },
       ],
-      commentNum:1,
-      comments:[
+      commentNum: 1,
+      comments: [
         {
-          firstname:'Mingjie',
-          lastname:"Wang",
-          time:'2021-09-02 22:35',
-          content:"It is really a great website, and I'm totoally obsseseed with it!"
+          firstname: 'Mingjie',
+          lastname: "Wang",
+          time: '2021-09-02 22:35',
+          content: "It is really a great website, and I'm totoally obsseseed with it!"
         },
         {
-          firstname:'Jacky',
-          lastname:"Li",
-          time:'2021-09-03 10:20',
-          content:"Your website definitely helps me a lot since I've been finding such a web for a long time."
+          firstname: 'Jacky',
+          lastname: "Li",
+          time: '2021-09-03 10:20',
+          content: "Your website definitely helps me a lot since I've been finding such a web for a long time."
         },
         {
-          firstname:'Ziniu',
-          lastname:'Niu',
-          time:'2021-09-04 01:44',
-          content:'IGEM HP GAME IS SO FUCKKKKKKKKKKING FUNNY!!'
+          firstname: 'Ziniu',
+          lastname: 'Niu',
+          time: '2021-09-04 01:44',
+          content: 'IGEM HP GAME IS SO FUCKKKKKKKKKKING FUNNY!!'
         },
         {
-          firstname:'Liyou',
-          lastname:'Wang',
-          time:'2021-09-04 11:20',
-          content:'A great website but will be better with some more beautiful picture.'
+          firstname: 'Liyou',
+          lastname: 'Wang',
+          time: '2021-09-04 11:20',
+          content: 'A great website but will be better with some more beautiful picture.'
         },
         {
-          firstname:'正一',
-          lastname:'卓',
-          time:'2021-09-04 19:21',
-          content:'这个网站真的很赞，我真的哭死'
+          firstname: '正一',
+          lastname: '卓',
+          time: '2021-09-04 19:21',
+          content: '这个网站真的很赞，我真的哭死'
         },
         {
-          firstname:'Zihan',
-          lastname:'Zhang',
-          time:'2021-09-05 10:37',
-          content:'Good website which helps me in an exam'
+          firstname: 'Zihan',
+          lastname: 'Zhang',
+          time: '2021-09-05 10:37',
+          content: 'Good website which helps me in an exam'
         },
       ]
+    }
+  },
+  computed: {
+    curPageContents: function () {
+      return this.publishedCurrentPage != this.commentNum / 5 ?
+          this.comments.slice(5 * this.publishedCurrentPage - 5, 5 * this.publishedCurrentPage) :
+          this.comments.slice(5 * this.publishedCurrentPage - 5, this.commentNum)
     }
   }
 }
 </script>
 
 <style scoped>
-  @import "../assets/css/font.css";
-  /*#ratings{*/
-  /*  display: block;*/
-  
-  /*}*/
-  .el-icon-star-on:before {
-      font-size: 1.5em !important;
-  }
-  .bigFontSize{
-      font-size: 10px;
-      color: #999;
-      padding:6px 6px;
-      font-family:"FZHeiBJW","Lato-Bold";
-      margin:1px;
-      word-wrap: break-word;
-      word-break: normal;
-  }
-  .NameFontSize{
-      font-size:22px;
-      padding: 1px 6px;
-      font-weight: bold;
-      text-align: left;
-      display:block;
-      margin-top:10px;
-      margin-right:10px;
-      font-family:"Lato-Bold","FZHeiBJW";
-      flex: 1;  
-  }
-  .commentSize{
-      font-size: 18px;
-      color: rgb(2, 0, 0);
-      padding:6px 6px;
-      display: block;
-      font-family:"PingFang SC";
-      margin:1px;
-      text-align: left;
-      word-wrap: break-word;
-      word-break: normal;
-  }
-  #ratings{
-    
-    vertical-align: middle;
-    padding-left: 12px;
-    text-align: center;
-    font-family:"Lato-Bold";
-    /*width: 20px;*/
-    /*background-color: blue;*/
-  }
-  
-  #commentNumText{
-    display:inline-block;
-    font-size: 1.2em;
-    /*horiz-align: center;*/
-  }
-  
-  #myIcon{
-    display:inline-block;
-    margin-right:10px;
-    color:#0f68ba;
-    font-size:1.2em;
-  }
-  
-  .outer-box-card{
-    border-radius: 15px;
-    border-width: 3px;
-    border-color: #7b7b7b;
-    background-color: #ffffff;
-    box-shadow: 7px 7px 10px #888888;
-    animation: fadeInDown;
-    animation-duration: 0.5s;
-  }
-  </style>
+@import "../assets/css/font.css";
+
+
+.el-icon-star-on:before {
+  font-size: 1.5em !important;
+}
+
+.home {
+  font-family: Futura;
+}
+
+.bigFontSize {
+  font-size: 10px;
+  color: #999;
+  padding: 6px 6px;
+  margin: 1px;
+  word-wrap: break-word;
+  word-break: normal;
+}
+
+.NameFontSize {
+  font-size: 22px;
+  padding: 1px 6px;
+  font-weight: bold;
+  text-align: left;
+  display: block;
+  margin-top: 10px;
+  margin-right: 10px;
+  flex: 1;
+}
+
+.commentSize {
+  font-size: 18px;
+  color: rgb(2, 0, 0);
+  padding: 6px 6px;
+  display: block;
+  margin: 1px;
+  text-align: left;
+  word-wrap: break-word;
+  word-break: normal;
+}
+
+#commentNumText {
+  display: inline-block;
+  font-size: 1.2em;
+}
+
+#myIcon {
+  display: inline-block;
+  margin-right: 10px;
+  color: #0f68ba;
+  font-size: 1.2em;
+}
+
+.banner {
+  background-image: linear-gradient(45deg, #64cccc 0%, #64cccc 25%, #137bfc 25%);
+  color: #fcfcfc;
+  font-weight: normal;
+  padding: 1rem 0 1rem 0;
+}
+
+.sectors {
+  background: #2c342c;
+  color: #fcfcfc;
+  padding-bottom: 4rem;
+}
+
+.sectors .card {
+  margin: 5rem 0 0 8rem;
+  display: inline-flex;
+}
+
+.card .title {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.card .title:hover {
+  color: #63cbcb;
+  cursor: pointer;
+}
+
+.card .separator {
+  width: 2em;
+  height: 2em;
+}
+
+.card-left {
+  padding-top: 2rem;
+  text-align: left;
+  width: 50%;
+}
+
+.card-right {
+  width: 60%;
+}
+
+.card-right img {
+  max-width: 60%;
+}
+
+.highlight-region {
+  padding: 5rem 0 7rem 10rem;
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: auto;
+}
+
+.odd-highlight {
+  text-align: left;
+  margin: 1rem;
+  padding: 5px 1rem 1.5rem 1rem;
+  background-image: linear-gradient(135deg, #147bfc 0%, #147bfc 3%, #2b332b8c 3%);
+  color: #fcfcfc;
+  backdrop-filter: blur(15px);
+}
+
+.even-highlight {
+  text-align: left;
+  margin: 1rem;
+  padding: 5px 1rem 1.5rem 1rem;
+  background-image: linear-gradient(135deg, #2b332b 0%, #2b332b 3%, #147bfc4a 3%);
+  color: #2c3e50;
+  backdrop-filter: blur(15px);
+  font-weight: 5;
+}
+
+
+.comment-board {
+  column-count: 3;
+  background: white;
+  padding: 5rem 2rem 5rem 2rem;
+  display: flex;
+}
+
+.comment {
+  text-align: left;
+  margin: 0 2rem 0 2rem;
+}
+
+.logo-bar {
+  display: inline-flex;
+  margin: 1rem 0 1rem 0;
+}
+
+.logo-bar img {
+  height: 2rem;
+  padding: 0 2rem 0 2rem;
+}
+
+.el-button:hover {
+  background: #1c7cfc;
+  color: #fcfcfc;
+  border-color: #2c342c;
+}
+</style>
