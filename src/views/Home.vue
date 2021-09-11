@@ -213,7 +213,7 @@
 
 
     <!--    评论区-->
-    <div class="comment-board">
+    <div class="comment-board" ref="commentBoard">
       <div style="width: 33.3%">
         <div v-for="i in [0, 1]" :key="i" class="comment">
           <div v-if="curPageContents[i]">
@@ -379,10 +379,9 @@ export default {
   created() {
 
     getComment().then(response => {
-      this.comments = eval(response.data).reverse();
+      this.comments = eval(response.data)
       //按时间倒序排列
       this.commentNum = this.comments.length
-      this.couponList = response.data.couponList;
     }).catch(() => {
       this.$message.error("There's something wrong with your network.");
     })
