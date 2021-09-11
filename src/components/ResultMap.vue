@@ -29,7 +29,7 @@
         </div>
         
         <el-row v-else>
-            <el-col id="network_id" class="network" style="height:80vh" :span="15"></el-col>
+            <el-col id="network_id_2" class="network" style="height:80vh" :span="15"></el-col>
             <el-col :span="9" >
                 <!--控制栏-->
                 <div style="text-align: left;background-color: #f4fcfc;height: 80vh;">

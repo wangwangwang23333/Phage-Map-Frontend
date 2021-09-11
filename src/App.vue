@@ -1,16 +1,26 @@
 <template>
   <div id="app">
     <!--导航栏-->
-    <div style="text-align: left;margin-top: 1%;"> 
-      <el-button type="text" style="margin-left: 10%;font-family: 'goodFont';" @click="jumpToHomePage()">HomePage</el-button>
+    <div style="text-align: left; padding-top: 5px; padding-bottom: 5px">
+      <el-button type="text"
+                 style="margin-left: 5vw;font-family: 'Futura';font-weight: bold; font-size: medium"
+                 @click="jumpToHomePage()">
+        Phage-MAP
+      </el-button>
       <span style="float: right;margin-right: 10%;">
-        <el-button @click="downloadFile()" style="font-family: 'goodFont';">Docs</el-button>
-        <el-button style="margin-left: 0;font-family: 'goodFont';" type="primary" plain @click="openGitHub()" >Git Hub</el-button>
+        <el-button @click="downloadFile()" style="font-family: 'Futura'; " type="text">Docs</el-button>
+
+        <el-button
+            style="margin-left: 20px;font-family: 'Futura'; "
+            type="primary"
+            @click="openGitHub()" >
+          Git Hub
+        </el-button>
       </span>
     </div>
     <!--加一个分割线-->
-    <el-divider ></el-divider>
-    <router-view style="width: 80vw;margin-left: 5vw;"/>
+
+    <router-view/>
   </div>
 </template>
 
@@ -38,11 +48,11 @@ export default{
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  margin-left: 10vw;
+  margin-right: 10vw;
 }
 
 #nav {
@@ -57,6 +67,19 @@ export default{
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
+.el-button {
+  border-radius: 999em;
+}
+
+.el-button--primary {
+  background: #147bfa;
+}
+
+.el-button--primary:hover {
+  background: #4c4c4c;
+}
+
 </style>
 
 <style scoped>

@@ -1,8 +1,6 @@
-
 import axios from 'axios'
 
 // 每次请求携带cookies信息
-axios.defaults.headers.post['Content-Type']='application/x-www-form-urlencoded'
 axios.defaults.withCredentials = true
 
 // create an axios instance
