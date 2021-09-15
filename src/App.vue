@@ -11,7 +11,7 @@
         <el-button @click="downloadFile()" style="font-family: 'Futura'; " type="text">Docs</el-button>
 
         <el-button
-            style="margin-left: 20px;font-family: 'Futura'; "
+            style="margin-left: 20px; font-family: 'Futura'; "
             type="primary"
             @click="openGitHub()" >
           Git Hub
