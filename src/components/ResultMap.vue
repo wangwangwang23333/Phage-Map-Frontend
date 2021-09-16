@@ -5,7 +5,7 @@
             
             <el-table
                 ref="multipleTable"
-                :data="tableData"
+                :data="MapData.tableData"
                 tooltip-effect="dark"
                 style="width: 100%"
                 empty-text="No result now"
@@ -34,11 +34,11 @@
                 <!--控制栏-->
                 <div style="text-align: left;background-color: #f4fcfc;height: 80vh;">
                     <div class="sub-title" style="line-height: 5vh;font-weight: bold;margin-left: 5%;margin-top: 3vh;">Searching Condition</div>
-                    <el-input placeholder="Please input here" v-model="searchText"
+                    <el-input placeholder="Please input here" v-model="MapData.searchText"
                      class="input-with-select"
                      style="width: 80%;margin-left: 5%;"
                      >
-                        <el-select v-model="findCondition" slot="prepend" placeholder="Please choose">
+                        <el-select v-model="MapData.findCondition" slot="prepend" placeholder="Please choose">
                           <el-option label="Species" value="1"></el-option>
                           <el-option label="Bacteria" value="2"></el-option>
                           <el-option label="Phage" value="3"></el-option>
@@ -48,11 +48,11 @@
                     
                     <!--得分筛选-->
                     <div class="sub-title" style="line-height: 5vh;font-weight: bold;margin-left: 5%;margin-top: 5vh;">Score</div>
-                    <el-input placeholder="Please input here" v-model="searchScore"
+                    <el-input placeholder="Please input here" v-model="MapData.searchScore"
                      class="input-with-select"
                      style="width: 80%;margin-left: 5%;"
                      >
-                        <el-select v-model="scoreCompare" slot="prepend" placeholder="Please choose">
+                        <el-select v-model="MapData.scoreCompare" slot="prepend" placeholder="Please choose">
                             <el-option label="=" value="1"></el-option>
                             <el-option label=">" value="2"></el-option>
                             <el-option label="<" value="3"></el-option>
@@ -65,7 +65,7 @@
                     <!--展示的结点数目-->
                     <div class="sub-title" style="line-height: 5vh;font-weight: bold;margin-left: 5%;margin-top: 5vh;">Set number of display records</div>
                     <el-input-number 
-                    v-model="showNodeNumber" 
+                    v-model="MapData.showNodeNumber" 
                     @change="handleChange" 
                     :min="1" 
                     :max="50" 
@@ -90,11 +90,11 @@
             </el-col>
         </el-row>
 
-        <el-dialog title="测试框" :visible.sync="dialogVisible" width="width">
+        <el-dialog title="测试框" :visible.sync="MapData.dialogVisible" width="width">
             <div>xxxxxx</div>
             <div slot="footer">
-                <el-button @click="dialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+                <el-button @click="MapData.dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="MapData.dialogVisible = false">确 定</el-button>
             </div>
         </el-dialog>
     </div>
@@ -105,94 +105,28 @@
     export default {
         name: 'ResultMap',
         props: {
-            showTable: Boolean
+            showTable: Boolean,
+            MapData: Object
         },
         data() {
             return {
-                //检索条件
-                findCondition: "1",
-                searchText: '',
-                scoreCompare: "4",
-                dialogVisible: false,
-                searchScore: '0',
-                showNodeNumber: 10,
-                nodes: [],
-                edges: [],
-                // network:null,
-                container: null,
-                //   节点数组
-                nodesArray: [
-                    {
-                        id: 0,
-                        label: "大前端",
-                        color: { background: "yellow" }
-                    },
-                    {
-                        id: 1,
-                        label: "HTML",
-                        color: { background: "pink" }
-                    },
-                    {
-                        id: 2,
-                        label: "JavaScript",
-                        color: { background: "pink" }
-                    },
-                    {
-                        id: 3,
-                        label: "CSS",
-                        color: { background: "pink" }
-                    },
-                    {
-                        id: 4,
-                        label: "三大主流框架",
-                        color: { background: "pink" }
-                    },
-                    {
-                        id: 5,
-                        label: "vue.js",
-                        color: { background: "pink" }
-                    },
-                    {
-                        id: 6,
-                        label: "react.js",
-                        color: { background: "pink" }
-                    },
-                    {
-                        id: 7,
-                        label: "angular.js",
-                        color: { background: "pink" }
-                    }
-                ],
-                //   关系线数组
-                edgesArray: [
-                    { from: 0, to: 1, label: "ddd" },
-                    { from: 1, to: 0, label: "aaa" },
-                    { from: 0, to: 2, label: "step1" },
-                    { from: 0, to: 3, label: "step1" },
-                    { from: 0, to: 4, label: "step1" },
-                    { from: 4, to: 5, label: "step2" },
-                    { from: 4, to: 6, label: "step2" },
-                    { from: 4, to: 7, label: "step2" }
-                ],
-                options: {},
-                data: {},
-                //表格数据
-                tableData: []
+
             };
         },
         methods: {
             init() {
                 let _this = this;
                 //1.创建一个nodes数组
-                _this.nodes = new Vis.DataSet(_this.nodesArray);
+
+                _this.MapData.nodes = new Vis.DataSet(_this.MapData.nodesArray);
                 //2.创建一个edges数组
-                _this.edges = new Vis.DataSet(_this.edgesArray);
-                _this.container = document.getElementById("network_id");
-                _this.data = {
-                    nodes: _this.nodes,
-                    edges: _this.edges
+                _this.MapData.edges = new Vis.DataSet(_this.MapData.edgesArray);
+                _this.MapData.container = document.getElementById("network_id");
+                _this.MapData.data = {
+                    nodes: _this.MapData.nodes,
+                    edges: _this.MapData.edges
                 };
-                _this.options = {
+                _this.MapData.options = {
                     autoResize: true, //网络将自动检测其容器的大小调整，并相应地重绘自身
                     locale: "cn", //语言设置：工具栏显示中文
                     //设置语言
@@ -293,27 +227,28 @@
                 };
 
                 _this.network = new Vis.Network(
-                    _this.container,
-                    _this.data,
-                    _this.options
+                    _this.MapData.container,
+                    _this.MapData.data,
+                    _this.MapData.options
                 );
+                
             },
 
             resetAllNodes() {
                 let _this = this;
-                _this.nodes.clear();
-                _this.edges.clear();
-                _this.nodes.add(_this.nodesArray);
-                _this.edges.add(_this.edgesArray);
-                _this.data = {
-                    nodes: _this.nodes,
-                    edges: _this.edges
+                _this.MapData.nodes.clear();
+                _this.MapData.edges.clear();
+                _this.MapData.nodes.add(_this.MapData.nodesArray);
+                _this.MapData.edges.add(_this.MapData.edgesArray);
+                _this.MapData.data = {
+                    nodes: _this.MapData.nodes,
+                    edges: _this.MapData.edges
                 };
                 //   network是一种用于将包含点和线的网络和网络之间的可视化展示
                 _this.network = new Vis.Network(
-                    _this.container,
-                    _this.data,
-                    _this.options
+                    _this.MapData.container,
+                    _this.MapData.data,
+                    _this.MapData.options
                 );
             },
             resetAllNodesStabilize() {
@@ -345,13 +280,13 @@
             this.init();
             // 点击事件
             this.network.on("click", params => {
-                console.log("点击", params.nodes);
+                console.log("点击", params.MapData.nodes);
                 // this.network.addEdgeMode();
             });
             // 点击鼠标右键事件
             this.network.on("oncontext", params => {
                 console.log("右击", params);
-                this.dialogVisible = true;
+                this.MapData.dialogVisible = true;
             });
         }
     };

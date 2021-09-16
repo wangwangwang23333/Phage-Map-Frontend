@@ -48,7 +48,7 @@
     <!--待完成的地图模块-->
     <div>
       <!--搜索框-->
-      <ResultMap :showTable="false"/>
+      <ResultMap :showTable="false" :MapData="getTableData()"/>
     </div>
 
     <!--联系-->
@@ -70,6 +70,7 @@
 
 <script>
 import ResultMap from '@/components/ResultMap.vue'
+import {findBacteriaByKey} from '@/api/finder.js'
 
 export default {
   name: 'Finder',
@@ -83,7 +84,83 @@ export default {
     gotoStart() {
       this.$refs["start"].scrollIntoView(true);
     },
+    getTableData()
+      {
+          var mapdata=findBacteriaByKey("Lactobacillus fermentum IFO");
+          console.log(mapdata)
 
+          return {
+                findCondition: "1",
+                searchText: '',
+                scoreCompare: "4",
+                dialogVisible: false,
+                searchScore: '0',
+                showNodeNumber: 10,
+                nodes: [],
+                edges: [],
+                // network:null,
+                container: null,
+                //   节点数组
+                nodesArray: [
+                    {
+                        id: 0,
+                        label: "大前端",
+                        color: { background: "yellow" }
+                    },
+                    {
+                        id: 1,
+                        label: "HTML",
+                        color: { background: "pink" }
+                    },
+                    {
+                        id: 2,
+                        label: "JavaScript",
+                        color: { background: "pink" }
+                    },
+                    {
+                        id: 3,
+                        label: "CSS",
+                        color: { background: "pink" }
+                    },
+                    {
+                        id: 4,
+                        label: "三大主流框架",
+                        color: { background: "pink" }
+                    },
+                    {
+                        id: 5,
+                        label: "vue.js",
+                        color: { background: "pink" }
+                    },
+                    {
+                        id: 6,
+                        label: "react.js",
+                        color: { background: "pink" }
+                    },
+                    {
+                        id: 7,
+                        label: "angular.js",
+                        color: { background: "pink" }
+                    }
+                ],
+                //   关系线数组
+                edgesArray: [
+                    { from: 0, to: 1, label: "ddd" },
+                    { from: 1, to: 0, label: "aaa" },
+                    { from: 0, to: 2, label: "step1" },
+                    { from: 0, to: 3, label: "step1" },
+                    { from: 0, to: 4, label: "step1" },
+                    { from: 4, to: 5, label: "step2" },
+                    { from: 4, to: 6, label: "step2" },
+                    { from: 4, to: 7, label: "step2" }
+                ],
+                options: {},
+
+                data:{},
+                //表格数据
+                tableData: []
+            };
+      }
   },
 
 }
