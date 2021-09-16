@@ -90,7 +90,7 @@
           <!--        标题-->
           <div style="display: inline-block; padding-bottom: 2.5rem;">
             <img src="../assets/home/separater.svg" class="separator">
-            <span class="title" @click="jumpTo(1)"> Bacteriophage Bay </span>
+            <span class="title" @click="jumpTo(0)"> Bacteriophage Bay </span>
           </div>
           <!--          说明-->
           <div style="padding-bottom: 2.5rem">
@@ -100,7 +100,7 @@
 
           <!--          按钮-->
           <!--          TODO: Fix this-->
-          <el-button @click="jumpTo(1)"> DOWNLOAD</el-button>
+          <el-button @click="jumpTo(0)"> DOWNLOAD</el-button>
         </div>
 
 
@@ -124,7 +124,7 @@
           <!--        标题-->
           <div style="display: inline-block; padding-bottom: 2.5rem;">
             <img src="../assets/home/separater.svg" class="separator">
-            <span class="title" @click="jumpTo(2)"> Phage Finder </span>
+            <span class="title" @click="jumpTo(1)"> Phage Finder </span>
           </div>
           <!--          说明-->
           <div style="padding-bottom: 2.5rem">
@@ -142,7 +142,7 @@
           <!--        标题-->
           <div style="display: inline-block; padding-bottom: 2.5rem;">
             <img src="../assets/home/separater.svg" class="separator">
-            <span class="title" @click="jumpTo(3)"> Interactive MAP </span>
+            <span class="title" @click="jumpTo(2)"> Interactive MAP </span>
           </div>
           <!--          说明-->
           <div style="padding-bottom: 2.5rem">
@@ -213,7 +213,7 @@
 
 
     <!--    评论区-->
-    <div class="comment-board">
+    <div class="comment-board" ref="commentBoard">
       <div style="width: 33.3%">
         <div v-for="i in [0, 1]" :key="i" class="comment">
           <div v-if="curPageContents[i]">
@@ -379,10 +379,9 @@ export default {
   created() {
 
     getComment().then(response => {
-      this.comments = eval(response.data).reverse();
+      this.comments = eval(response.data)
       //按时间倒序排列
       this.commentNum = this.comments.length
-      this.couponList = response.data.couponList;
     }).catch(() => {
       this.$message.error("There's something wrong with your network.");
     })

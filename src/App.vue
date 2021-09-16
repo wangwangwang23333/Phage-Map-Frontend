@@ -11,7 +11,7 @@
         <el-button @click="downloadFile()" style="font-family: 'Futura'; " type="text">Docs</el-button>
 
         <el-button
-            style="margin-left: 20px;font-family: 'Futura'; "
+            style="margin-left: 20px; font-family: 'Futura'; "
             type="primary"
             @click="openGitHub()" >
           Git Hub
@@ -21,6 +21,14 @@
     <!--加一个分割线-->
 
     <router-view/>
+
+<!--    ICP备案-->
+    <a href="https://beian.miit.gov.cn/#/Integrated/index" >
+    <div style="display: inline-flex; padding-top: 0.5rem">
+      <img :src="require('./assets/ICP.png')">
+      黔ICP备2021006451号
+    </div>
+    </a>
   </div>
 </template>
 
