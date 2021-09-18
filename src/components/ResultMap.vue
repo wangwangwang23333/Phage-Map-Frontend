@@ -108,6 +108,7 @@
             showTable: Boolean
         },
         data() {
+
             return {
                 //检索条件
                 findCondition: "1",
@@ -181,13 +182,24 @@
             };
         },
         methods: {
-            init() {
+
+            initializeOptions()
+            {
                 let _this = this;
                 //1.创建一个nodes数组
                 _this.nodes = new Vis.DataSet(_this.nodesArray);
                 //2.创建一个edges数组
                 _this.edges = new Vis.DataSet(_this.edgesArray);
-                _this.container = document.getElementById("network_id");
+                
+                if(this.showTable==true)
+                {
+                    _this.container = document.getElementById("network_id");
+                }
+                else
+                {
+                    _this.container=document.getElementById("network_id_2");
+                }
+                
                 _this.data = {
                     nodes: _this.nodes,
                     edges: _this.edges
@@ -218,10 +230,10 @@
                     // 设置节点样式
                     nodes: {
                         shape: "circle",
-                        size: 50,
+                        size: 15,
                         font: {
                             //字体配置
-                            size: 32
+                            size: 15
                         },
                         color: {
                             // border: "#2B7CE9", //节点边框颜色
@@ -242,8 +254,8 @@
                     },
                     // 边线配置
                     edges: {
-                        width: 1,
-                        length: 260,
+                        width: 3,
+                        length: 300,
                         color: {
                             color: "#848484",
                             highlight: "#848484",
@@ -292,11 +304,22 @@
                     }
                 };
 
-                _this.network = new Vis.Network(
-                    _this.container,
-                    _this.data,
-                    _this.options
-                );
+                //console.log("container:",_this.container);
+                //console.log("data:",_this.data);
+                //console.log("options:",_this.options);
+
+                _this.network = new Vis.Network( _this.container, _this.data, _this.options );
+            },
+
+            init() {
+                if(this.showTable==true){
+                    this.requestMapDate("Lactobacillus fermentum IFO",findBacteriaByKey,this.initializeOptions);
+                }
+                else{
+                    console.log("limit of search result:",this.showNodeNumber);
+                    this.requestMapDate(this.searchText,findBacteriaByKey,this.initializeOptions,this.showNodeNumber,this.searchScore);
+                }
+                
             },
 
             resetAllNodes() {
@@ -330,25 +353,114 @@
 
             },
 
+            requestMapDate(str,find,func=()=>{},data_limit=50,score_limit=-10)
+            {
+                find(str).then(response=>{
+                    var mapdata={
+                    nodes: [],
+                    edges: [],
+                    nodesArray: [],
+                    edgesArray: [],
+                    }
+                    var genbank_set= new Set();
+                    var phage_set= new Set();
+                    
+                    data_limit=Number(data_limit);
+                    score_limit=Number(score_limit);
+                    
+                    let data_num=0;
+                    for(let i in response.data){
+
+                        let item=response.data[i];
+
+                        if(item.score<score_limit)
+                        {
+                            continue;
+                        }
+
+                        data_num=data_num+1;
+                        genbank_set.add(item.genebankId);
+                        phage_set.add(item.phageId);
+
+                        if(data_num>=data_limit)
+                        {
+                            break;
+                        }
+                    }
+                    
+                    var genbank_map=new Map()
+                    var phage_map=new Map()
+                    var cnt=0;
+                    for(let i of genbank_set){
+                        genbank_map.set(i,cnt);
+                        cnt=cnt+1
+                    }
+                    for(let i of phage_set){
+                        phage_map.set(i,cnt); 
+                        cnt=cnt+1
+
+                    }
+
+
+                    for(let [k,v] of genbank_map){
+                        mapdata.nodesArray.push({id:v,label:k,color:{background: "yellow"}})
+                    }
+
+                    for(let [k,v] of phage_map){
+                        mapdata.nodesArray.push({id:v,label:k,color:{background: "pink"}}) 
+                    }
+
+                    data_num=0;
+
+                    for(let i in response.data){ 
+                        let item=response.data[i];
+
+                        if(item.score<score_limit) { continue; }
+
+
+                        data_num=data_num+1;
+
+                        let g_id=genbank_map.get(item.genebankId);
+                        let p_id=phage_map.get(item.phageId);
+                        let len=item.score;
+                        mapdata.edgesArray.push({ from: g_id, to: p_id, label: len.toString() })
+
+                        if(data_num>=data_limit) { break; }
+
+                    }
+                    this.edgesArray=mapdata.edgesArray;
+                    this.nodesArray=mapdata.nodesArray;
+                    this.nodes=[];
+                    this.edges=[];
+
+                    console.log(this.edgesArray)
+                    console.log(this.nodesArray)
+
+                    func();
+                    
+                }).catch((error)=>{
+                    //this.$message.error("There's something wrong with your network.");
+                    console.log("请求错误:"+error.toString());
+                })
+            },
+
             //处理搜索内容
             clickSearch() {
-                //this.searchText
-                findBacteriaByKey(this.searchText).then(response=>{
-                    console.log(response)
-                }).catch(()=>{
-                    this.$message.error("There's something wrong with your network.");
-                })
+                console.log("searching:",this.searchText);
+                console.log("limit of search result:",this.showNodeNumber);
+                this.requestMapDate(this.searchText,findBacteriaByKey,this.initializeOptions,this.showNodeNumber,this.searchScore);
+
             }
         },
 
         mounted() {
             this.init();
-            // 点击事件
+            //点击事件
             this.network.on("click", params => {
                 console.log("点击", params.nodes);
-                // this.network.addEdgeMode();
+                this.network.addEdgeMode();
             });
-            // 点击鼠标右键事件
+            //点击鼠标右键事件
             this.network.on("oncontext", params => {
                 console.log("右击", params);
                 this.dialogVisible = true;
