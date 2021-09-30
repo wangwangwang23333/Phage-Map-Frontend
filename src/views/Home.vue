@@ -404,7 +404,8 @@ export default {
     },
     jumpTo(index) {
       if (index == 0) {
-        this.$router.push({path: "/bay"});
+        // 直接下载数据库
+        alert("正在下载数据库中")
       } else if (index == 1) {
         this.$router.push({path: "/finder"});
       } else {
