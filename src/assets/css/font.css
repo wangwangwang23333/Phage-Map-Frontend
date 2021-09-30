@@ -41,10 +41,3 @@
     font-weight: 5;
     font-style: normal;
 }
-
-@font-face {
-    font-family: 'AdobeSong';
-    src: url('../font/AdobeSongStd-Light.otf') format('truetype');
-    font-weight: 1;
-    font-style: normal;
-}
