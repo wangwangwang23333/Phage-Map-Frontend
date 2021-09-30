@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" ref="home">
     <div
         style="background-image: linear-gradient(to bottom,#2c342c 0%, #2c342c 90%, rgba(0,0,0,0) 90% , rgba(0,0,0,0) 100%)"
     >
@@ -145,6 +145,9 @@ export default {
   created() {
 
     
+  },
+  mounted(){
+    this.$refs["home"].scrollIntoView(true);
   },
   methods: {
     
