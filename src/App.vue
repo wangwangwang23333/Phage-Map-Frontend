@@ -22,13 +22,16 @@
 
     <router-view/>
 
-<!--    ICP备案-->
-    <a href="https://beian.miit.gov.cn/#/Integrated/index" >
-    <div style="display: inline-flex; padding-top: 0.5rem">
-      <img :src="require('./assets/ICP.png')">
-      黔ICP备2021006451号
-    </div>
-    </a>
+<!--
+ICP备案
+<a href="https://beian.miit.gov.cn/#/Integrated/index" >
+  <div style="display: inline-flex; padding-top: 0.5rem">
+    <img :src="require('./assets/ICP.png')">
+    黔ICP备2021006451号
+  </div>
+  </a>
+
+-->
   </div>
 </template>
 

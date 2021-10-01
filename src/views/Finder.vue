@@ -220,10 +220,6 @@ export default {
       sendComment(param).then(response => {
         response;
 
-        //自己的数据添加
-        this.comments.splice(0, 0, param)
-        this.commentNum += 1
-
         //提醒添加成功
         this.$message({
           message: 'You have successfully commented!!',
@@ -235,9 +231,7 @@ export default {
         this.lastname = ''
         this.content = ''
 
-        //跳转到评论区
-        this.$refs["commentBoard"].scrollIntoView(true);
-
+       
       }).catch(() => {
         this.$message.error("There's something wrong with your network.");
       })
