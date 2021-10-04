@@ -50,8 +50,7 @@ export default{
     },
     downloadFile(){
       //下载文件
-      window.open('static/docs.pdf')
-      alert('下载文件尚未完成');
+      window.open('files/docs.pdf')
     }
   }
 }
