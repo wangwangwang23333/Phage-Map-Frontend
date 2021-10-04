@@ -2,7 +2,7 @@
     <div>
         <!--width,height 画布的宽度，高度。 可以是百分比或像素，一般在dom元素上设置 -->
         <div v-if="showTable">
-            
+            <div id="network_id" class="network" style="height:80vh" :span="15"></div>
             <el-table
                 ref="multipleTable"
                 :data="tableData"
@@ -15,17 +15,36 @@
                 width="55">
                 </el-table-column>
                 <el-table-column
-                prop="id"
-                label="Bacteria ID"
-                width="100">
+                prop="bugSeqId"
+                label="Super Bug Id"
+                width="200">
                 </el-table-column>
                 <el-table-column
-                prop="name"
-                label="Bacteria Name"
+                prop="superBugName"
+                label="Super Bug Name"
+                width="200">
+                </el-table-column>
+                <el-table-column
+                prop="phageId"
+                label="Phage Id"
+                width="200">
+                </el-table-column>
+                <el-table-column
+                prop="phageName"
+                label="Phage Name"
+                width="200">
+                </el-table-column>
+                <el-table-column
+                prop="phageClusterId"
+                label="Phage Cluster Id"
+                width="200">
+                </el-table-column>
+                <el-table-column
+                prop="score"
+                label="Score"
                 show-overflow-tooltip>
                 </el-table-column>
             </el-table>
-            <div id="network_id" class="network" style="height:80vh" :span="15"></div>
         </div>
         
         <el-row v-else>
@@ -39,7 +58,7 @@
                      style="width: 80%;margin-left: 5%;"
                      >
                         <el-select v-model="findCondition" slot="prepend" placeholder="Please choose">
-                          <el-option label="Species" value="1"></el-option>
+                          <el-option label="All Species" value="1"></el-option>
                           <el-option label="Bacteria" value="2"></el-option>
                           <el-option label="Phage" value="3"></el-option>
                         </el-select>
@@ -101,7 +120,10 @@
 </template>
 <script>
     import Vis from "vis";
-    import { findBacteriaByKey } from '@/api/finder';
+    import { findBacteriaByKey,findPhageByKey,findAllSpeciesByKey} from '@/api/finder';
+    import { findAllMap } from '@/api/map';
+'@/api/finder';
+
     export default {
         name: 'ResultMap',
         props: {
@@ -182,6 +204,55 @@
             };
         },
         methods: {
+
+
+            selectScore(score,score_limit=Number.NEGATIVE_INFINITY)
+            {
+                /*
+                <el-option label="=" value="1"></el-option>
+                <el-option label=">" value="2"></el-option>
+                <el-option label="<" value="3"></el-option>
+                <el-option label=">=" value="4"></el-option>
+                <el-option label="<=" value="5"></el-option>
+                */
+
+                switch(Number(this.scoreCompare))
+                {
+                    case 1:
+                        return score==score_limit;
+                    case 2:
+                        return score>score_limit;
+                    case 3:
+                        return score<score_limit;
+                    case 4:
+                        return score>=score_limit;
+                    case 5:
+                        return score<=score_limit;
+                    default:
+                        return score>score_limit;
+                }
+            },
+
+            selectCondition()
+            {
+                /*
+                <el-option label="All Species" value="1"></el-option>
+                <el-option label="Bacteria" value="2"></el-option>
+                <el-option label="Phage" value="3"></el-option>
+                */
+                switch(this.findCondition)
+                {
+                    case 1:
+                        return findAllSpeciesByKey;
+                    case 2:
+                        return findBacteriaByKey;
+                    case 3:
+                        return findPhageByKey;
+                    default:
+                        return findAllSpeciesByKey
+                }
+
+            },
 
             initializeOptions()
             {
@@ -313,11 +384,11 @@
 
             init() {
                 if(this.showTable==true){
-                    this.requestMapDate("Lactobacillus fermentum IFO",findBacteriaByKey,this.initializeOptions);
+                    this.requestMapDate("All Map",findAllMap,this.initializeOptions);
                 }
                 else{
-                    console.log("limit of search result:",this.showNodeNumber);
-                    this.requestMapDate(this.searchText,findBacteriaByKey,this.initializeOptions,this.showNodeNumber,this.searchScore);
+                    console.log("limit of search result:",this.showNodeNumber,this.searchScore,this.scoreCompare);
+                    this.requestMapDate(this.searchText,this.selectCondition(),this.initializeOptions,this.showNodeNumber,this.searchScore);
                 }
                 
             },
@@ -353,30 +424,121 @@
 
             },
 
-            requestMapDate(str,find,func=()=>{},data_limit=50,score_limit=-10)
+            requestMapDate(str,find,func=()=>{},data_limit=50,score_limit=Number.NEGATIVE_INFINITY)
             {
-                find(str).then(response=>{
-                    var mapdata={
+                if(this.showTable==true)
+                {
+                    this.tableData=[];
+                    find().then(response=>{
+                        let mapdata={
+                        nodes: [],
+                        edges: [],
+                        nodesArray: [],
+                        edgesArray: [],
+                        }
+                        let genbank_set= new Set();
+                        let phage_set= new Set();
+                        
+                        data_limit=Number(data_limit);
+
+                        
+                        let data_num=0;
+                        for(let i in response.data){
+
+                            let item=response.data[i];
+
+                            data_num=data_num+1;
+                            genbank_set.add(item.bugSeqId);
+                            phage_set.add(item.phageId);
+
+                            this.tableData.push(response.data[i]);
+                            if(data_num>=data_limit)
+                            {
+                                break;
+                            }
+                        }
+                        
+                        let genbank_map=new Map()
+                        let phage_map=new Map()
+                        let cnt=0;
+                        for(let i of genbank_set){
+                            genbank_map.set(i,cnt);
+                            cnt=cnt+1
+                        }
+                        for(let i of phage_set){
+                            phage_map.set(i,cnt); 
+                            cnt=cnt+1
+
+                        }
+
+
+                        for(let [k,v] of genbank_map){
+                            mapdata.nodesArray.push({id:v,label:k,color:{background: "yellow"}})
+                        }
+
+                        for(let [k,v] of phage_map){
+                            mapdata.nodesArray.push({id:v,label:k,color:{background: "pink"}}) 
+                        }
+
+                        data_num=0;
+
+                        for(let i in response.data){ 
+                            let item=response.data[i];
+
+
+                            data_num=data_num+1;
+
+                            let g_id=genbank_map.get(item.bugSeqId);
+                            let p_id=phage_map.get(item.phageId);
+                            let len=item.score;
+                            mapdata.edgesArray.push({ from: g_id, to: p_id, label: len.toString() })
+
+                            if(data_num>=data_limit) { break; }
+
+                        }
+                        this.edgesArray=mapdata.edgesArray;
+                        this.nodesArray=mapdata.nodesArray;
+                        this.nodes=[];
+                        this.edges=[];
+
+                        console.log(this.edgesArray)
+                        console.log(this.nodesArray)
+
+                        func();
+                        
+                    }).catch((error)=>{
+                        //this.$message.error("There's something wrong with your network.");
+                        console.log("请求错误:"+error.toString());
+                    });
+                }
+                else
+                {
+                    find(str).then(response=>{
+                    let mapdata={
                     nodes: [],
                     edges: [],
                     nodesArray: [],
                     edgesArray: [],
                     }
-                    var genbank_set= new Set();
-                    var phage_set= new Set();
+                    let genbank_set= new Set();
+                    let phage_set= new Set();
                     
                     data_limit=Number(data_limit);
                     score_limit=Number(score_limit);
+
                     
                     let data_num=0;
                     for(let i in response.data){
 
                         let item=response.data[i];
 
-                        if(item.score<score_limit)
+                        if(this.selectScore(item.score,score_limit)==false)
                         {
                             continue;
                         }
+
+                        console.log("score:",item.score,"score_limit:",score_limit,this.scoreCompare);
+
 
                         data_num=data_num+1;
                         genbank_set.add(item.genebankId);
@@ -388,9 +550,9 @@
                         }
                     }
                     
-                    var genbank_map=new Map()
-                    var phage_map=new Map()
-                    var cnt=0;
+                    let genbank_map=new Map()
+                    let phage_map=new Map()
+                    let cnt=0;
                     for(let i of genbank_set){
                         genbank_map.set(i,cnt);
                         cnt=cnt+1
@@ -415,7 +577,10 @@
                     for(let i in response.data){ 
                         let item=response.data[i];
 
-                        if(item.score<score_limit) { continue; }
+                        if(this.selectScore(item.score,score_limit)==false) 
+                        { 
+                            continue;
+                        }
 
 
                         data_num=data_num+1;
@@ -439,16 +604,17 @@
                     func();
                     
                 }).catch((error)=>{
-                    //this.$message.error("There's something wrong with your network.");
-                    console.log("请求错误:"+error.toString());
-                })
+                        //this.$message.error("There's something wrong with your network.");
+                        console.log("请求错误:"+error.toString());
+                    });
+                }
+                
             },
-
             //处理搜索内容
             clickSearch() {
                 console.log("searching:",this.searchText);
-                console.log("limit of search result:",this.showNodeNumber);
-                this.requestMapDate(this.searchText,findBacteriaByKey,this.initializeOptions,this.showNodeNumber,this.searchScore);
+                console.log("limit of search result:",this.showNodeNumber,this.searchScore,this.scoreCompare);
+                this.requestMapDate(this.searchText,this.selectCondition(),this.initializeOptions,this.showNodeNumber,this.searchScore);
 
             }
         },
@@ -456,7 +622,7 @@
         mounted() {
             this.init();
             //点击事件
-            this.network.on("click", params => {
+            /*this.network.on("click", params => {
                 console.log("点击", params.nodes);
                 this.network.addEdgeMode();
             });
@@ -464,7 +630,7 @@
             this.network.on("oncontext", params => {
                 console.log("右击", params);
                 this.dialogVisible = true;
-            });
+            });*/
         }
     };
 </script>
