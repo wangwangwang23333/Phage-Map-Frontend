@@ -496,13 +496,17 @@
       },
 
       handleDownload(index, row) {
-        console.log(index, row.table);
+        //console.log(index, row.table);
 
+        window.open('files/database/'+row.table+'.csv')
       },
 
       downloadAllFiles(){
+        window.open('files/database.zip')
 
-      }
+      },
+
+      
 
     },
     data() {
