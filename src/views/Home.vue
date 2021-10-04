@@ -166,9 +166,9 @@
                 'odd-highlight': (i % 2),
                 'even-highlight': !(i % 2)
               }">
-                <span style="font-weight: bold">Highlight{{ i + 1 }}</span>
+                <span style="font-weight: bold">{{ item.title }}</span>
                 <br>
-                <span>{{ item.title }}</span>
+               
                 <p>{{ item.description }}</p>
               </div>
             </el-col>
@@ -544,29 +544,29 @@
         introduction: [
           {
             //highlight:'强调',
-            title: '题目1',
-            description: '我是一段很有意思的描述符，你不要觉得我没有意思，呵呵呵呵呵'
+            title: 'Powerful Data Support',
+            description: 'Bacteriophage Bay stores huge amount of data which can offer support for Phage Finder and Interactive MAP'
           },
           {
             //highlight:'强调',
-            title: '题目2',
-            description: '我是一段很有意思的描述符，你不要觉得我没有意思，呵呵呵呵呵'
+            title: 'Accurate Model',
+            description: 'Our team constructs several models to make sure the predicted value can be as consistent with the results in the lab'
           }, {
             //highlight:'强调',
-            title: '题目3',
-            description: '我是一段很有意思的描述符，你不要觉得我没有意思，呵呵呵呵呵'
+            title: 'Simple Operation',
+            description: 'Users only need to input some necessary parameters and our software will generate an easy-to-understand result'
           }, {
             //highlight:'强调',
-            title: '题目4',
-            description: '我是一段很有意思的描述符，你不要觉得我没有意思，呵呵呵呵呵'
+            title: 'User-friendly Interface',
+            description: 'We prepare handbook and instruction video to introduce the usage of every module'
           }, {
             //highlight:'强调',
-            title: '题目5',
-            description: '我是一段很有意思的描述符，你不要觉得我没有意思，呵呵呵呵呵'
+            title: 'One-step Service',
+            description: 'Our software covers the basic step of finding the host of phages'
           }, {
             //highlight:'强调',
-            title: '题目6',
-            description: '我是一段很有意思的描述符，你不要觉得我没有意思，呵呵呵呵呵'
+            title: 'Short Runtime',
+            description: 'To make users obtain the results in a short time. we optimize our model and algorithm to make the procedure run faster'
           },
         ],
         commentNum: 1,
