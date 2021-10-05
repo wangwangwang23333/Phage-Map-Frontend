@@ -1,8 +1,25 @@
 <template>
     <div>
+        <el-dialog
+            title="Details"
+            :visible.sync="dialogVisible"
+            @close="dialogVisible=false;"
+            width="width"
+            center>
+            <div>
+                <p>Species: {{currentSpecies}}</p>
+                <p>Name: {{currentName}}</p>
+                <p>Id: {{currentId}}</p>
+            </div>
+            <div slot="footer">
+                <el-button type="primary" @click="newWindow()" >  View {{currentId}} on NCBI  </el-button>
+                <el-button @click="dialogVisible = false">  Close this details about {{currentId}}  </el-button>
+            </div>
+        </el-dialog>
+
+
         <!--width,height 画布的宽度，高度。 可以是百分比或像素，一般在dom元素上设置 -->
-        <div v-if="showTable">
-            <div id="network_id" class="network" style="height:80vh" :span="15"></div>
+        <div v-if="showTable" sytle="text-align : center;">
             <el-table
                 ref="multipleTable"
                 :data="tableData"
@@ -16,35 +33,28 @@
                 </el-table-column>
                 <el-table-column
                 prop="bugSeqId"
-                label="Super Bug Id"
+                label="Super Bug Sequence Id"
                 width="200">
                 </el-table-column>
                 <el-table-column
-                prop="superBugName"
+                prop="name"
                 label="Super Bug Name"
                 width="200">
                 </el-table-column>
                 <el-table-column
-                prop="phageId"
-                label="Phage Id"
+                prop="bugId"
+                label="Super Bug Id"
                 width="200">
                 </el-table-column>
                 <el-table-column
-                prop="phageName"
-                label="Phage Name"
+                prop="txid"
+                label="Taxon Id"
                 width="200">
-                </el-table-column>
-                <el-table-column
-                prop="phageClusterId"
-                label="Phage Cluster Id"
-                width="200">
-                </el-table-column>
-                <el-table-column
-                prop="score"
-                label="Score"
-                show-overflow-tooltip>
                 </el-table-column>
             </el-table>
+            <div id="network_id" class="network" slot="reference" style="height:80vh" :span="24"></div>
+            
+
         </div>
         
         <el-row v-else>
@@ -103,25 +113,17 @@
 
                     <!--下面是介绍-->
                     <div style="margin-top: 5vh;margin-left: 5%;">
-                        这里直接做一张图介绍
+                        <el-image :src="require('@/assets/tips.png')"></el-image>
                     </div>
                 </div>
             </el-col>
         </el-row>
-
-        <el-dialog title="测试框" :visible.sync="dialogVisible" width="width">
-            <div>xxxxxx</div>
-            <div slot="footer">
-                <el-button @click="dialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-            </div>
-        </el-dialog>
     </div>
 </template>
 <script>
     import Vis from "vis";
     import { findBacteriaByKey,findPhageByKey,findAllSpeciesByKey} from '@/api/finder';
-    import { findAllMap } from '@/api/map';
+    import { findAllMap,findAllBug } from '@/api/map';
 '@/api/finder';
 
     export default {
@@ -133,6 +135,9 @@
 
             return {
                 //检索条件
+                currentSpecies:"",
+                currentName:"",
+                currentId:"",
                 findCondition: "1",
                 searchText: '',
                 scoreCompare: "4",
@@ -154,57 +159,27 @@
                         id: 1,
                         label: "HTML",
                         color: { background: "pink" }
-                    },
-                    {
-                        id: 2,
-                        label: "JavaScript",
-                        color: { background: "pink" }
-                    },
-                    {
-                        id: 3,
-                        label: "CSS",
-                        color: { background: "pink" }
-                    },
-                    {
-                        id: 4,
-                        label: "三大主流框架",
-                        color: { background: "pink" }
-                    },
-                    {
-                        id: 5,
-                        label: "vue.js",
-                        color: { background: "pink" }
-                    },
-                    {
-                        id: 6,
-                        label: "react.js",
-                        color: { background: "pink" }
-                    },
-                    {
-                        id: 7,
-                        label: "angular.js",
-                        color: { background: "pink" }
                     }
                 ],
                 //   关系线数组
                 edgesArray: [
                     { from: 0, to: 1, label: "ddd" },
-                    { from: 1, to: 0, label: "aaa" },
-                    { from: 0, to: 2, label: "step1" },
-                    { from: 0, to: 3, label: "step1" },
-                    { from: 0, to: 4, label: "step1" },
-                    { from: 4, to: 5, label: "step2" },
-                    { from: 4, to: 6, label: "step2" },
-                    { from: 4, to: 7, label: "step2" }
+                    { from: 1, to: 0, label: "aaa" }
                 ],
                 options: {},
                 data: {},
                 //表格数据
-                tableData: []
+                tableData: [],
+                responseData:[],
+                visData:[]
             };
         },
         methods: {
 
+            newWindow()
+            {
+                window.open("https://www.ncbi.nlm.nih.gov/search/all/?term="+this.currentId);
+            },
 
             selectScore(score,score_limit=Number.NEGATIVE_INFINITY)
             {
@@ -229,7 +204,7 @@
                     case 5:
                         return score<=score_limit;
                     default:
-                        return score>score_limit;
+                        return score>=score_limit;
                 }
             },
 
@@ -240,7 +215,7 @@
                 <el-option label="Bacteria" value="2"></el-option>
                 <el-option label="Phage" value="3"></el-option>
                 */
-                switch(this.findCondition)
+                switch(Number(this.findCondition))
                 {
                     case 1:
                         return findAllSpeciesByKey;
@@ -320,8 +295,8 @@
                                 background: "#D2E5FF"
                             }
                         },
-                        borderWidth: 0, //节点边框宽度，单位为px
-                        borderWidthSelected: 2 //节点被选中时边框的宽度，单位为px
+                        borderWidth: 3, //节点边框宽度，单位为px
+                        borderWidthSelected: 5 //节点被选中时边框的宽度，单位为px
                     },
                     // 边线配置
                     edges: {
@@ -372,6 +347,9 @@
                         editEdge: true,
                         deleteNode: true,
                         deleteEdge: true
+                    },
+                    layout:{
+                        improvedLayout: false
                     }
                 };
 
@@ -380,6 +358,58 @@
                 //console.log("options:",_this.options);
 
                 _this.network = new Vis.Network( _this.container, _this.data, _this.options );
+
+                _this.network.on("oncontext", params => {
+                    let nodeId = _this.network.getNodeAt(params.pointer.DOM);
+                    if(nodeId!=undefined)
+                    {
+                        params.event.preventDefault();
+                        _this.network.selectNodes([nodeId]);
+                        let sNode=_this.network.getSelectedNodes()[0];
+
+                        let name=this.nodesArray[sNode].label.replace(/\n/g,' ');
+
+                        this.currentSpecies="";
+                        this.currentName="";
+                        this.currentId="";
+                        
+                        for(let i in this.visData)
+                        {
+                            let item=this.visData[i];
+                            if(name===item.phageName)
+                            {
+                                this.currentSpecies="Phage";
+                                this.currentName=item.phageName;
+                                this.currentId=item.phageId;
+                                break;
+                            }
+                            if(name===item.scientificName)
+                            {
+                                this.currentSpecies="Phage";
+                                this.currentName=item.scientificName;
+                                this.currentId=item.phageId;
+                                break;
+
+                            }
+                            if(name===item.name)
+                            {
+                                this.currentSpecies="Bacteria";
+                                this.currentName=item.name;
+                                this.currentId=item.genebankId;
+                                break;
+                            }
+                            if(name===item.superBugName)
+                            {
+                                this.currentSpecies="Super Bug";
+                                this.currentName=item.superBugName;
+                                this.currentId=item.bugSeqId;
+                                break;
+                            }
+                        }
+
+                        this.dialogVisible = true;
+                    }
+				});
             },
 
             init() {
@@ -416,94 +446,220 @@
                 _this.network.stabilize();
             },
 
-            handleSelectionChange() {
+            handleSelectionChange(selected) {
+
+                //console.log(selected);
+
+                this.visData=[];
+                for(let i in selected)
+                {
+                    let bug=selected[i];
+
+                    for(let j in this.responseData)
+                    {
+                        let relation=this.responseData[j];
+
+                        if(relation.superBugTxid===bug.txid)
+                        {
+                            this.visData.push(relation);
+                        }
+                    }
+                }
+                this.drawMapVis(Number.POSITIVE_INFINITY,Number.NEGATIVE_INFINITY);
+                this.initializeOptions();
+            },
+            handleChange(){
+                this.clickSearch();
 
             },
 
-            handleChange(){
+            drawMapVis(data_limit=50,score_limit=Number.NEGATIVE_INFINITY)
+            {
 
+                let mapdata={
+                        nodes: [],
+                        edges: [],
+                        nodesArray: [],
+                        edgesArray: [],
+                        };
+                let genbank_set= new Set();
+                let phage_set= new Set();
+                
+                data_limit=Number(data_limit);
+                score_limit=Number(score_limit);
+
+                
+                let data_num=0;
+                for(let i in this.visData){
+
+                    let item=this.visData[i];
+
+                    if(this.selectScore(item.score,score_limit)==false)
+                    {
+                        continue;
+                    }
+
+                    data_num=data_num+1;
+                    genbank_set.add(item.superBugName);
+                    phage_set.add(item.phageName);
+
+                    if(data_num>=data_limit)
+                    {
+                        break;
+                    }
+                }
+                
+                let genbank_map=new Map()
+                let phage_map=new Map()
+                let cnt=0;
+                for(let i of genbank_set){
+                    genbank_map.set(i,cnt);
+                    cnt=cnt+1
+                }
+                for(let i of phage_set){
+                    phage_map.set(i,cnt); 
+                    cnt=cnt+1
+
+                }
+
+
+                for(let [k,v] of genbank_map){
+                    mapdata.nodesArray.push({id:v,label:k.replace(/ /g,'\n'),color:{background: "yellow"}})
+                }
+
+                for(let [k,v] of phage_map){
+                    mapdata.nodesArray.push({id:v,label:k.replace(/ /g,'\n'),color:{background: "pink"}}) 
+                }
+
+                data_num=0;
+
+                for(let i in this.visData){ 
+                    let item=this.visData[i];
+
+                    if(this.selectScore(item.score,score_limit)==false)
+                    {
+                        continue;
+                    }
+
+                    data_num=data_num+1;
+
+                    let g_id=genbank_map.get(item.superBugName);
+                    let p_id=phage_map.get(item.phageName);
+                    let len=item.score;
+
+                    //console.log("score",len);
+                    mapdata.edgesArray.push({ from: g_id, to: p_id, label: len.toString() })
+
+                    if(data_num>=data_limit) { break; }
+
+                }
+                this.edgesArray=mapdata.edgesArray;
+                this.nodesArray=mapdata.nodesArray;
+                this.nodes=[];
+                this.edges=[];
+            },
+
+
+            drawFinderVis(data_limit=50,score_limit=Number.NEGATIVE_INFINITY)
+            {
+
+                let mapdata={
+                        nodes: [],
+                        edges: [],
+                        nodesArray: [],
+                        edgesArray: [],
+                        };
+                let genbank_set= new Set();
+                let phage_set= new Set();
+                
+                data_limit=Number(data_limit);
+                score_limit=Number(score_limit);
+
+                
+                let data_num=0;
+                for(let i in this.visData){
+
+                    let item=this.visData[i];
+
+                    if(this.selectScore(item.score,score_limit)==false)
+                    {
+                        continue;
+                    }
+
+                    data_num=data_num+1;
+                    genbank_set.add(item.name);
+                    phage_set.add(item.scientificName);
+
+                    if(data_num>=data_limit)
+                    {
+                        break;
+                    }
+                }
+                
+                let genbank_map=new Map()
+                let phage_map=new Map()
+                let cnt=0;
+                for(let i of genbank_set){
+                    genbank_map.set(i,cnt);
+                    cnt=cnt+1
+                }
+                for(let i of phage_set){
+                    phage_map.set(i,cnt); 
+                    cnt=cnt+1
+
+                }
+
+
+                for(let [k,v] of genbank_map){
+                    mapdata.nodesArray.push({id:v,label:k.replace(/ /g,'\n'),color:{background: "yellow"}})
+                }
+
+                for(let [k,v] of phage_map){
+                    mapdata.nodesArray.push({id:v,label:k.replace(/ /g,'\n'),color:{background: "pink"}}) 
+                }
+
+                data_num=0;
+
+                for(let i in this.visData){ 
+                    let item=this.visData[i];
+
+                    if(this.selectScore(item.score,score_limit)==false)
+                    {
+                        continue;
+                    }
+
+                    data_num=data_num+1;
+
+                    let g_id=genbank_map.get(item.name);
+                    let p_id=phage_map.get(item.scientificName);
+                    let len=item.score;
+
+                    //console.log("score",len);
+                    mapdata.edgesArray.push({ from: g_id, to: p_id, label: len.toString() })
+
+                    if(data_num>=data_limit) { break; }
+
+                }
+                this.edgesArray=mapdata.edgesArray;
+                this.nodesArray=mapdata.nodesArray;
+                this.nodes=[];
+                this.edges=[];
             },
 
             requestMapDate(str,find,func=()=>{},data_limit=50,score_limit=Number.NEGATIVE_INFINITY)
             {
                 if(this.showTable==true)
                 {
-                    this.tableData=[];
+                    findAllBug().then(response=>{
+                        this.tableData=response.data;
+                    }).catch((error)=>{
+                        //this.$message.error("There's something wrong with your network.");
+                        console.log("请求错误:"+error.toString());
+                    });
                     find().then(response=>{
-                        let mapdata={
-                        nodes: [],
-                        edges: [],
-                        nodesArray: [],
-                        edgesArray: [],
-                        }
-                        let genbank_set= new Set();
-                        let phage_set= new Set();
-                        
-                        data_limit=Number(data_limit);
-
-                        
-                        let data_num=0;
-                        for(let i in response.data){
-
-                            let item=response.data[i];
-
-                            data_num=data_num+1;
-                            genbank_set.add(item.bugSeqId);
-                            phage_set.add(item.phageId);
-
-                            this.tableData.push(response.data[i]);
-                            if(data_num>=data_limit)
-                            {
-                                break;
-                            }
-                        }
-                        
-                        let genbank_map=new Map()
-                        let phage_map=new Map()
-                        let cnt=0;
-                        for(let i of genbank_set){
-                            genbank_map.set(i,cnt);
-                            cnt=cnt+1
-                        }
-                        for(let i of phage_set){
-                            phage_map.set(i,cnt); 
-                            cnt=cnt+1
-
-                        }
-
-
-                        for(let [k,v] of genbank_map){
-                            mapdata.nodesArray.push({id:v,label:k,color:{background: "yellow"}})
-                        }
-
-                        for(let [k,v] of phage_map){
-                            mapdata.nodesArray.push({id:v,label:k,color:{background: "pink"}}) 
-                        }
-
-                        data_num=0;
-
-                        for(let i in response.data){ 
-                            let item=response.data[i];
-
-
-                            data_num=data_num+1;
-
-                            let g_id=genbank_map.get(item.bugSeqId);
-                            let p_id=phage_map.get(item.phageId);
-                            let len=item.score;
-                            mapdata.edgesArray.push({ from: g_id, to: p_id, label: len.toString() })
-
-                            if(data_num>=data_limit) { break; }
-
-                        }
-                        this.edgesArray=mapdata.edgesArray;
-                        this.nodesArray=mapdata.nodesArray;
-                        this.nodes=[];
-                        this.edges=[];
-
-                        console.log(this.edgesArray)
-                        console.log(this.nodesArray)
-
+                        this.responseData=response.data;
+                        this.visData=[];
+                        this.drawMapVis(data_limit,score_limit);
                         func();
                         
                     }).catch((error)=>{
@@ -514,94 +670,10 @@
                 else
                 {
                     find(str).then(response=>{
-                    let mapdata={
-                    nodes: [],
-                    edges: [],
-                    nodesArray: [],
-                    edgesArray: [],
-                    }
-                    let genbank_set= new Set();
-                    let phage_set= new Set();
-                    
-                    data_limit=Number(data_limit);
-                    score_limit=Number(score_limit);
-
-                    
-                    let data_num=0;
-                    for(let i in response.data){
-
-                        let item=response.data[i];
-
-                        if(this.selectScore(item.score,score_limit)==false)
-                        {
-                            continue;
-                        }
-
-                        console.log("score:",item.score,"score_limit:",score_limit,this.scoreCompare);
-
-
-                        data_num=data_num+1;
-                        genbank_set.add(item.genebankId);
-                        phage_set.add(item.phageId);
-
-                        if(data_num>=data_limit)
-                        {
-                            break;
-                        }
-                    }
-                    
-                    let genbank_map=new Map()
-                    let phage_map=new Map()
-                    let cnt=0;
-                    for(let i of genbank_set){
-                        genbank_map.set(i,cnt);
-                        cnt=cnt+1
-                    }
-                    for(let i of phage_set){
-                        phage_map.set(i,cnt); 
-                        cnt=cnt+1
-
-                    }
-
-
-                    for(let [k,v] of genbank_map){
-                        mapdata.nodesArray.push({id:v,label:k,color:{background: "yellow"}})
-                    }
-
-                    for(let [k,v] of phage_map){
-                        mapdata.nodesArray.push({id:v,label:k,color:{background: "pink"}}) 
-                    }
-
-                    data_num=0;
-
-                    for(let i in response.data){ 
-                        let item=response.data[i];
-
-                        if(this.selectScore(item.score,score_limit)==false) 
-                        { 
-                            continue;
-                        }
-
-
-                        data_num=data_num+1;
-
-                        let g_id=genbank_map.get(item.genebankId);
-                        let p_id=phage_map.get(item.phageId);
-                        let len=item.score;
-                        mapdata.edgesArray.push({ from: g_id, to: p_id, label: len.toString() })
-
-                        if(data_num>=data_limit) { break; }
-
-                    }
-                    this.edgesArray=mapdata.edgesArray;
-                    this.nodesArray=mapdata.nodesArray;
-                    this.nodes=[];
-                    this.edges=[];
-
-                    console.log(this.edgesArray)
-                    console.log(this.nodesArray)
-
-                    func();
+                        this.responseData=response.data;
+                        this.visData=response.data;
+                        this.drawFinderVis(data_limit,score_limit);
+                        func();
                     
                 }).catch((error)=>{
                         //this.$message.error("There's something wrong with your network.");
@@ -621,16 +693,6 @@
 
         mounted() {
             this.init();
-            //点击事件
-            /*this.network.on("click", params => {
-                console.log("点击", params.nodes);
-                this.network.addEdgeMode();
-            });
-            //点击鼠标右键事件
-            this.network.on("oncontext", params => {
-                console.log("右击", params);
-                this.dialogVisible = true;
-            });*/
         }
     };
 </script>

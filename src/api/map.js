@@ -7,3 +7,12 @@ export function findAllMap() {
         params:{}
     })
 }
+
+
+export function findAllBug() {
+    return request({
+        url: '/map/bug/all',
+        method: 'get',
+        params:{}
+    })
+}
