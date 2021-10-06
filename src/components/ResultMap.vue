@@ -15,7 +15,7 @@
       <div slot="footer">
         <el-button type="primary" @click="newWindow()"> View {{ currentId }} on NCBI</el-button>
         <br><br>
-        <el-button @click="dialogVisible = false"> Close </el-button>
+        <el-button @click="dialogVisible = false"> Close</el-button>
       </div>
     </el-dialog>
 
@@ -117,7 +117,12 @@
                 @click="clickSearch()"
                 plain icon="el-icon-search" round>Search
             </el-button>
-            <el-button type="info" plain icon="el-icon-download" round @click="downloadFinderData">Download</el-button>
+            <el-button
+                type="success" icon="el-icon-download"
+                round @click="downloadFinderData"
+                :disabled="responseData.length == 0"
+            >Download
+            </el-button>
           </div>
 
           <!--下面是介绍-->
@@ -177,6 +182,47 @@ export default {
     this.nodeMap = new Map()
   },
   methods: {
+
+    downloadFinderData() {
+      console.log(this.responseData)
+      if (!this.responseData.length)
+        return;
+      var blob = new Blob([this.responseDataToString(this.responseData)], {type: '.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'});
+      console.log(blob);
+
+      const url3 = window.URL.createObjectURL(blob);
+      console.log(url3);
+      var filename = 'searchResult' + '.csv';
+      const link = document.createElement('a');
+      link.style.display = 'none';
+      link.href = url3;
+      link.setAttribute('download', filename);
+      document.body.appendChild(link);
+      link.click();
+    },
+
+    responseDataToString(data) {
+      if (data.length == 0) {
+        return ""
+      }
+      var temp = "bacteriaGenebankId,bacteriaSeqNcbiId,bacteriaTaxonId,phageId,phageTaxonId,blastScore,phpScore,thirdScore,score,bacteriaName,phageScientificName\n"
+      for (let j = 0; j < data.length; j++) {
+        let i = data[j]
+        temp += i.genebankId + ','
+        temp += i.seqNcbiId + ','
+        temp += i.bacteriaTxid + ','
+        temp += i.phageId + ','
+        temp += i.phageTxid + ','
+        temp += i.blastScore + ','
+        temp += i.phpScore + ','
+        temp += i.score + ','
+        temp += i.thirdScore + ','
+        temp += i.name + ','
+        temp += i.scientificName + ','
+        temp += '\n'
+      }
+      return temp;
+    },
 
     newWindow() {
       window.open("https://www.ncbi.nlm.nih.gov/search/all/?term=" + this.currentId);
@@ -547,7 +593,8 @@ export default {
             background: '#f57797',
             highlight: "#fbc7d4",
             hover: "#fbc7d4"
-          }})
+          }
+        })
       }
 
       data_num = 0;
@@ -607,16 +654,20 @@ export default {
       }
 
       for (let [k, v] of phage_map) {
-        this.nodes.add({id: v, label: k.replace(/ /g, '\n'), color: {
+        this.nodes.add({
+          id: v, label: k.replace(/ /g, '\n'), color: {
             background: '#f57797',
             highlight: "#fbc7d4",
             hover: "#fbc7d4"
-          }})
-        this.nodesArray.push({id: v, label: k.replace(/ /g, '\n'), color: {
+          }
+        })
+        this.nodesArray.push({
+          id: v, label: k.replace(/ /g, '\n'), color: {
             background: '#f57797',
             highlight: "#fbc7d4",
             hover: "#fbc7d4"
-          }})
+          }
+        })
       }
 
       let from = this.nodeMap.get("Phage Cluster " + clusterId)
@@ -692,7 +743,8 @@ export default {
             background: '#f57797',
             highlight: "#fbc7d4",
             hover: "#fbc7d4"
-          }})
+          }
+        })
       }
 
       for (let [k, v] of phage_map) {
@@ -702,7 +754,8 @@ export default {
             background: "#7574eb",
             highlight: "#b9b8f5",
             hover: "#b9b8f5"
-          }})
+          }
+        })
       }
 
       data_num = 0;
@@ -734,7 +787,8 @@ export default {
       this.edges = [];
     },
 
-    requestMapDate(str, find, func = () => {},
+    requestMapDate(str, find, func = () => {
+                   },
                    data_limit = 50, score_limit = Number.NEGATIVE_INFINITY) {
       if (this.showTable == true) {
         findAllBug().then(response => {
