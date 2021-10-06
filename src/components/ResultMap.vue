@@ -54,19 +54,38 @@
       </el-table>
 
       <div id="network_id" class="network" slot="reference"
+        
            style="height:80vh; background: linear-gradient(to bottom, #536976, #292E49);" :span="24"
-      ></div>
-
+      >
+      
+    </div>
+    <el-image 
+      :src="require('@/assets/tableBlank.png')"
+      v-if="!selectedItems "
+      style="margin-top:-150%;width: 50%;position:relative;"></el-image>
+<!--v-if="!selectedItems "-->
 
     </div>
 
-    <el-row style="background: linear-gradient(to bottom, #536976, #292E49);" v-else>
+    <el-row 
+    
+    style="background: linear-gradient(to bottom, #536976, #292E49);" v-else>
       <el-col id="network_id_2" class="network"
-              style="height:80vh;" :span="15"></el-col>
+      v-loading="loading"
+      element-loading-text="Searching..."
+      element-loading-background="rgba(0, 0, 0, 0.1)"
+              style="height:80vh;" :span="15">
+              
+            </el-col>
+      <el-image 
+      :src="require('@/assets/finderBlank.png')"
+      v-if="responseData.length == 0 && !loading"
+      style="margin-left: -130%;margin-top:20%;width: 30%;"></el-image>
       <el-col :span="9" style="background: rgba(233,236,239,0.3)">
         <!--控制栏-->
         <div style="text-align: left;height: 80vh;">
-          <div class="sub-title" style="line-height: 5vh;font-weight: bold;margin-left: 5%;margin-top: 3vh;">Searching
+          <div 
+          class="sub-title" style="line-height: 5vh;font-weight: bold;margin-left: 5%;margin-top: 3vh;">Searching
             Condition
           </div>
           <el-input placeholder="Please input here" v-model="searchText"
@@ -115,6 +134,7 @@
             <el-button
                 type="primary"
                 @click="clickSearch()"
+                :disabled="searchText.length <= 3"
                 plain icon="el-icon-search" round>Search
             </el-button>
             <el-button
@@ -150,6 +170,8 @@ export default {
 
     return {
       //检索条件
+      loading:false,
+      selectedItems:false,
       currentSpecies: "",
       currentName: "",
       currentId: "",
@@ -507,7 +529,7 @@ export default {
     handleSelectionChange(selected) {
 
       console.log(selected);
-
+      this.selectedItems = selected.length!=0;
       this.visData = [];
       for (let i in selected) {
         let bug = selected[i];
@@ -794,6 +816,7 @@ export default {
         findAllBug().then(response => {
           this.tableData = response.data;
           this.$refs.multipleTable.toggleRowSelection([this.tableData[0]])
+          this.loading = false;
         }).catch((error) => {
           //this.$message.error("There's something wrong with your network.");
           console.log("请求错误:" + error.toString());
@@ -814,7 +837,7 @@ export default {
           this.visData = response.data;
           this.drawFinderVis(data_limit, score_limit);
           func();
-
+          this.loading = false;
         }).catch((error) => {
           //this.$message.error("There's something wrong with your network.");
           console.log("请求错误:" + error.toString());
@@ -824,6 +847,7 @@ export default {
     },
     //处理搜索内容
     clickSearch() {
+      this.loading = true;
       console.log("searching:", this.searchText);
       console.log("limit of search result:", this.showNodeNumber, this.searchScore, this.scoreCompare);
       this.requestMapDate(this.searchText, this.selectCondition(), this.initializeOptions, this.showNodeNumber, this.searchScore);
@@ -844,4 +868,7 @@ export default {
 .el-select .el-input {
   width: 130px;
 }
+body {
+    margin: 0;
+  }
 </style>
