@@ -117,7 +117,7 @@
                 @click="clickSearch()"
                 plain icon="el-icon-search" round>Search
             </el-button>
-            <el-button type="info" plain icon="el-icon-download" round>Download</el-button>
+            <el-button type="info" plain icon="el-icon-download" round @click="downloadFinderData">Download</el-button>
           </div>
 
           <!--下面是介绍-->
