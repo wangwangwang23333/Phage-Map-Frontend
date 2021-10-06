@@ -847,7 +847,13 @@ export default {
     },
     //处理搜索内容
     clickSearch() {
+      //加载
       this.loading = true;
+
+      //清空上一轮的搜索结果
+      this.edgesArray = [];
+      this.nodesArray = [];
+      this.initializeOptions();
       console.log("searching:", this.searchText);
       console.log("limit of search result:", this.showNodeNumber, this.searchScore, this.scoreCompare);
       this.requestMapDate(this.searchText, this.selectCondition(), this.initializeOptions, this.showNodeNumber, this.searchScore);
