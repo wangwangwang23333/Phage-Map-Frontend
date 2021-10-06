@@ -107,7 +107,7 @@
               :min="1"
               :max="50"
               label="Node Number"
-              style="margin-left: 5%;"
+              style="margin-left: 20%;"
           ></el-input-number>
 
           <div style="margin-top: 5vh;margin-left: 5%;">
@@ -121,8 +121,8 @@
           </div>
 
           <!--下面是介绍-->
-          <div style="margin-top: 6rem;margin-left: 5%;">
-            <el-image :src="require('@/assets/tips.png')"></el-image>
+          <div style="margin-top: 15%;margin-left: 8%;">
+            <el-image :src="require('@/assets/tips.png')" style="width: 25vw;"></el-image>
           </div>
         </div>
       </el-col>
