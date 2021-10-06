@@ -180,7 +180,7 @@ export default {
       scoreCompare: "4",
       dialogVisible: false,
       searchScore: '0',
-      showNodeNumber: 10,
+      showNodeNumber: 50,
       nodes: [],
       edges: [],
       // network:null,
@@ -546,7 +546,8 @@ export default {
       this.initializeOptions();
     },
     handleChange() {
-      this.clickSearch();
+      this.drawFinderVis(this.showNodeNumber, this.searchScore);
+      this.initializeOptions();
 
     },
 
