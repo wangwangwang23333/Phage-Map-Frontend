@@ -83,8 +83,8 @@
           </div>
           <!--          说明-->
           <div style="padding-bottom: 2.5rem">
-            We put data in a well-organised database.<br>
-            By clicking grass or title, you can download it.
+            We put data in a well-organised database. <br>
+            By clicking, you can download it.
           </div>
 
           <!--          按钮-->
@@ -135,7 +135,7 @@
           <!--          说明-->
           <div style="padding-bottom: 2.5rem">
             A visual network diagram of the <br>
-            Phage-Bacteria interactions.
+            Phage-Superbug interactions.
           </div>
 
         </div>
