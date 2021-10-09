@@ -13,9 +13,9 @@
            :style="{'background-image': 'url(' + require('@/assets/home/line-above.svg') + ') '}"
       >
         <!--      介绍文字-->
-        <div style="font-size: 2.5em; font-weight: 1; padding-top: 7rem">
-          We provide a tool to
-        </div>
+<!--        <div style="font-size: 2.5em; font-weight: 1; padding-top: 7rem">-->
+<!--          We provide a tool to-->
+<!--        </div>-->
 
         <!--      大标题-->
         <div style="display: inline-flex; font-size: 4em; padding-top: 0.2em">
@@ -49,10 +49,10 @@
       <span style="font-size: 1.5em;font-weight: bold;margin-bottom: 3em;">
         Bacteria associated with phages
       </span>
-      <br>
-      <span>
-        10819 species of bacteria, 26773 bacterial sequences; In 14,571 sequences of 12,041 phage species
-      </span>
+<!--      <br>-->
+<!--      <span>-->
+<!--        10819 species of bacteria, 26773 bacterial sequences; In 14,571 sequences of 12,041 phage species-->
+<!--      </span>-->
     </div>
 
     <!--    功能板块-->

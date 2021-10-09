@@ -9,7 +9,10 @@
             <b style="color: #409EFF;
             font-size: xx-large;font-family: 'FZHeiBJW'"> Bacteriophage Bay</b>
             </div>
-            <p style="font-size: medium;color: grey;">In this page, you can download the database.</p>
+            <p style="font-size: medium;color: grey;">
+              We put data in a well-organised database. <br>
+              By clicking, you can download it.
+            </p>
         </div>
         <!--空白部分-->
         <div style="margin-top: 10%;">

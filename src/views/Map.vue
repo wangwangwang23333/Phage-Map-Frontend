@@ -14,9 +14,9 @@
            :style="{'background-image': 'url(' + require('@/assets/home/line-above.svg') + ') '}"
       >
         <!--      介绍文字-->
-        <div style="font-size: 2.5em; font-weight: 1; padding-top: 7rem">
-          More intuitive representation
-        </div>
+<!--        <div style="font-size: 2.5em; font-weight: 1; padding-top: 7rem">-->
+<!--          More intuitive representation-->
+<!--        </div>-->
 
         <!--      大标题-->
         <div style="display: inline-flex; font-size: 4em; padding-top: 0.2em">
@@ -29,7 +29,7 @@
             style=" font-size: medium; padding-top: .5em;  padding-bottom: 1rem;
             padding-top: 2em;">
             A visual network diagram of <br>
-            the Phage-Bacteria interactions
+            the Phage-Superbug interactions.
         </div>
 
         <!--      按钮-->
