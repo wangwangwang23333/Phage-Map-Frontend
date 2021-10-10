@@ -27,3 +27,11 @@ export function findAllSpeciesByKey(data) {
     })
 }
 
+export function findSuggestion(path, key, pageNum) {
+    // localhost:8082/api/search/all/suggestion?key=a&pageNum=1
+    return request({
+        url: '/search' + path + '/suggestion',
+        method: 'get',
+        params:{key:key, pageNum: pageNum}
+    })
+}
