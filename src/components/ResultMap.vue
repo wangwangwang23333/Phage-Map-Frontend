@@ -88,17 +88,20 @@
           class="sub-title" style="line-height: 5vh;font-weight: bold;margin-left: 5%;margin-top: 3vh;">Searching
             Condition
           </div>
-          <el-input placeholder="Please input here" v-model="searchText"
-                    class="input-with-select"
-                    style="width: 80%;margin-left: 5%;"
+
+          <el-autocomplete
+              class="input-with-select"
+              style="width: 80%;margin-left: 5%;"
+              v-model="searchText"
+              :fetch-suggestions="querySearch"
+              placeholder="Name, Seq id or Taxon id."
           >
             <el-select v-model="findCondition" slot="prepend" placeholder="Please choose">
               <el-option label="All Species" value="1"></el-option>
               <el-option label="Bacteria" value="2"></el-option>
               <el-option label="Phage" value="3"></el-option>
             </el-select>
-
-          </el-input>
+          </el-autocomplete>
 
           <!--得分筛选-->
           <div class="sub-title" style="line-height: 5vh;font-weight: bold;margin-left: 5%;margin-top: 5vh;">Score</div>
@@ -134,7 +137,7 @@
             <el-button
                 type="primary"
                 @click="clickSearch()"
-                :disabled="searchText.length <= 3"
+                :disabled="searchText.length <= 3 || isSearching"
                 plain icon="el-icon-search" round>Search
             </el-button>
             <el-button
@@ -158,6 +161,7 @@
 import Vis from "vis";
 import {findBacteriaByKey, findPhageByKey, findAllSpeciesByKey} from '@/api/finder';
 import {findAllMap, findAllBug} from '@/api/map';
+import {findSuggestion} from "../api/finder";
 
 '@/api/finder';
 
@@ -196,7 +200,9 @@ export default {
       responseData: [],
       visData: [],
       expandedMAPNode: null,
-      nodeMap: null
+      nodeMap: null,
+      searchSuggestion: "",
+      isSearching: false
     };
   },
   created() {
@@ -248,6 +254,24 @@ export default {
 
     newWindow() {
       window.open("https://www.ncbi.nlm.nih.gov/search/all/?term=" + this.currentId);
+    },
+
+    querySearch(key, cb) {
+      var path = "/all";
+      if (this.findCondition === 2) path = "/bacteria";
+      else if (this.findCondition === 3) path = "/phage";
+
+      findSuggestion(path, key, 1)
+      .then( response => {
+        console.log(response.data);
+        var result = []
+        for (let i = 0; i < response.data.length; i++) {
+          result.push({"value": response.data[i].name })
+        }
+        cb(result)
+      }, error => {
+        console.log(error)
+      })
     },
 
     selectScore(score, score_limit = Number.NEGATIVE_INFINITY) {
@@ -813,6 +837,7 @@ export default {
     requestMapDate(str, find, func = () => {
                    },
                    data_limit = 50, score_limit = Number.NEGATIVE_INFINITY) {
+      this.isSearching = true;
       if (this.showTable == true) {
         findAllBug().then(response => {
           this.tableData = response.data;
@@ -834,12 +859,15 @@ export default {
         });
       } else {
         find(str).then(response => {
+          this.isSearching = false
           this.responseData = response.data;
           this.visData = response.data;
           this.drawFinderVis(data_limit, score_limit);
           func();
           this.loading = false;
         }).catch((error) => {
+          this.isSearching = false
+          this.loading = false;
           //this.$message.error("There's something wrong with your network.");
           console.log("请求错误:" + error.toString());
         });
