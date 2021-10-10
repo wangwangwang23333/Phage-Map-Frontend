@@ -201,6 +201,7 @@ export default {
       visData: [],
       expandedMAPNode: null,
       nodeMap: null,
+      shownClusterId:[],
       searchSuggestion: "",
       isSearching: false
     };
@@ -551,6 +552,9 @@ export default {
     },
 
     handleSelectionChange(selected) {
+      //清空展出项目
+      this.shownClusterId= [];
+      
 
       console.log(selected);
       this.selectedItems = selected.length!=0;
@@ -680,6 +684,12 @@ export default {
     },
 
     expendMAPVis(clusterId) {
+      //判断是否已经被展开
+      for(let i=0;i<this.shownClusterId.length;++i){
+        if(this.shownClusterId[i]==clusterId){
+          return;
+        }
+      }
 
       let phage_set = new Set();
 
@@ -700,6 +710,8 @@ export default {
         cnt = cnt + 1
       }
 
+      
+
       for (let [k, v] of phage_map) {
         this.nodes.add({
           id: v, label: k.replace(/ /g, '\n'), color: {
@@ -717,7 +729,10 @@ export default {
         })
       }
 
+      
+
       let from = this.nodeMap.get("Phage Cluster " + clusterId)
+      this.shownClusterId.push(clusterId)
 
       for (let i in this.visData) {
         let item = this.visData[i];
