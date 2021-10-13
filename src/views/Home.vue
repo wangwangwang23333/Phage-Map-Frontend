@@ -531,7 +531,7 @@
               src: require("../assets/illustration.mp4"), //视频url地址
             },
           ],
-          //poster: require("../assets/videos/meetYou.jpg"), //你的封面地址
+          poster: require("../assets/illustrationHeader.png"), //你的封面地址
           // width: document.documentElement.clientWidth,
           notSupportedMessage: "The video cannot be wathed now. Please wait.", //允许覆盖Video.js无法播放媒体源时显示的默认信息。
           controlBar: {

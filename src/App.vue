@@ -50,7 +50,7 @@ export default{
     },
     downloadFile(){
       //下载文件
-      window.open('files/docs.pdf')
+      window.open('files/handbook-En.pdf')
     }
   }
 }

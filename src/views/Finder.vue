@@ -18,21 +18,21 @@
 <!--        </div>-->
 
         <!--      大标题-->
-        <div style="display: inline-flex; font-size: 4em; padding-top: 0.2em">
+        <div style="display: inline-flex; font-size: 4em; padding-top: 3em">
           <img src="@/assets/logo.png" style="display:inline-block;width: 1em; height: 1em; margin-right: .5em; padding-top: 15px">
           <span style=" font-weight: bold;">Phage Finder</span>
         </div>
 
         <!--        说明-->
         <div
-            style=" font-size: medium; padding-top: .5em;  padding-bottom: 1rem;
-            padding-top: 2em;">
+            style=" font-size: medium;  padding-bottom: 1rem;
+            padding-top: 6em;">
             Anyone can use it to find the phage associated<br>
             with target bacterium.
         </div>
 
         <!--      按钮-->
-        <div style="padding-top: 1rem; padding-bottom: 5em;">
+        <div style="padding-top: 3rem; padding-bottom: 8em;">
           <el-button style="color: #030303; font-weight: normal;"
                      @click="gotoStart"
           > Get Started!
